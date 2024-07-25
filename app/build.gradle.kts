@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,9 +35,38 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    // room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.androidx.ui.desktop)
+    ksp(libs.room.compiler)
+
+    // retrofit
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.gson)
+
+    // fragment navigation
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
+    //dagger
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
