@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtutorial2.databinding.ItemThemeBinding
+import com.example.androidtutorial2.themes.domain.model.Theme
 
 class ThemesViewHolder(
-    parentView: ViewGroup, val binding: ItemThemeBinding = ItemThemeBinding.inflate(
+    parentView: ViewGroup, private val binding: ItemThemeBinding = ItemThemeBinding.inflate(
         LayoutInflater.from(parentView.context), parentView, false
     )
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(theme: String) {
-        binding.tvThemeName.text = theme
+    fun bind(theme: Theme) {
+        binding.tvThemeName.text = theme.name
     }
 }
