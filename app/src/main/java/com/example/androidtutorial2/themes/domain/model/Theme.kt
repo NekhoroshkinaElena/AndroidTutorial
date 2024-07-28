@@ -6,8 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Theme(
-    val id: Long,
-    val name: String,
-    val description: String,
-    val subThemes: List<SubTheme>?
+    val id: Int,
+    val name: String
 ) : Parcelable

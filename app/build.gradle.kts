@@ -54,8 +54,8 @@ dependencies {
     // room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    implementation(libs.androidx.ui.desktop)
     ksp(libs.room.compiler)
+    implementation(libs.androidx.ui.desktop)
 
     // retrofit
     implementation(libs.retrofit.retrofit)

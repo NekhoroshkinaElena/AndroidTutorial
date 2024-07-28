@@ -7,7 +7,7 @@ class ThemesInteractorImpl
 @Inject constructor(private val themesRepository: ThemesRepository) :
     ThemesInteractor {
 
-    override fun getListThemes(): List<Theme> {
+    override suspend fun getListThemes(): List<Theme> {
         return themesRepository.getListThemes()
     }
 }

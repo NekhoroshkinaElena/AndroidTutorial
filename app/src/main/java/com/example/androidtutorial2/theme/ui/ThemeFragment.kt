@@ -36,8 +36,7 @@ class ThemeFragment : Fragment() {
     private fun initializeListeners() {
         binding.tvLearn.setOnClickListener {
             findNavController().navigate(
-                R.id.action_themeFragment_to_subThemesFragment,
-                SubThemesFragment.createArgs(theme?.subThemes)
+                R.id.action_themeFragment_to_subThemesFragment
             )
         }
 
