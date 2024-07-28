@@ -21,9 +21,6 @@
         android:label="fragment_theme"
         tools:layout="@layout/fragment_theme">
         <action
-            android:id="@+id/action_themeFragment_to_materialStudyFragment"
-            app:destination="@id/materialStudyFragment" />
-        <action
             android:id="@+id/action_themeFragment_to_repeatFragment"
             app:destination="@id/repeatFragment" />
         <action
@@ -52,5 +49,9 @@
         android:id="@+id/subThemesFragment"
         android:name="com.example.androidtutorial2.sub_themes.ui.SubThemesFragment"
         android:label="fragment_sub_themes"
-        tools:layout="@layout/fragment_sub_themes" />
+        tools:layout="@layout/fragment_sub_themes" >
+        <action
+            android:id="@+id/action_subThemesFragment_to_materialStudyFragment"
+            app:destination="@id/materialStudyFragment" />
+    </fragment>
 </navigation>

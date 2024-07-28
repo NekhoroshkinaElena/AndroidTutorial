@@ -32,8 +32,8 @@ class ThemesFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        super.onAttach(context)
         (requireActivity().application as TutorialApplication).appComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(

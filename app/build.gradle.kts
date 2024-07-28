@@ -43,6 +43,7 @@ android {
 
     kapt {
         generateStubs = true
+        correctErrorTypes = true
     }
 }
 
