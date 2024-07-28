@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary">
+
+    <TextView
+        android:id="@+id/tvSubthemeName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Theme" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvSubthemeName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

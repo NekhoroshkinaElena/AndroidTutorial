@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".theme.ui.ThemeFragment">
+
+    <TextView
+        android:id="@+id/tvLearn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/button_theme_background"
+        android:gravity="center"
+        android:text="Изучение"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tvRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/button_theme_background"
+        android:gravity="center"
+        android:text="Повторение"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tvTests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/button_theme_background"
+        android:gravity="center"
+        android:text="Тестирование"
+        android:textSize="22sp" />
+</LinearLayout>

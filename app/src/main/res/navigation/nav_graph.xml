@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/themesFragment">
+
+
+    <fragment
+        android:id="@+id/themesFragment"
+        android:name="com.example.androidtutorial2.themes.ui.ThemesFragment"
+        android:label="fragment_themes"
+        tools:layout="@layout/fragment_themes">
+        <action
+            android:id="@+id/action_themesFragment_to_themeFragment"
+            app:destination="@id/themeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/themeFragment"
+        android:name="com.example.androidtutorial2.theme.ui.ThemeFragment"
+        android:label="fragment_theme"
+        tools:layout="@layout/fragment_theme">
+        <action
+            android:id="@+id/action_themeFragment_to_repeatFragment"
+            app:destination="@id/repeatFragment" />
+        <action
+            android:id="@+id/action_themeFragment_to_testsFragment"
+            app:destination="@id/testsFragment" />
+        <action
+            android:id="@+id/action_themeFragment_to_subThemesFragment"
+            app:destination="@id/subThemesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/materialStudyFragment"
+        android:name="com.example.androidtutorial2.material_study.ui.MaterialStudyFragment"
+        android:label="fragment_material_study"
+        tools:layout="@layout/fragment_material_study" />
+    <fragment
+        android:id="@+id/repeatFragment"
+        android:name="com.example.androidtutorial2.repeat.ui.RepeatFragment"
+        android:label="fragment_repeat"
+        tools:layout="@layout/fragment_repeat" />
+    <fragment
+        android:id="@+id/testsFragment"
+        android:name="com.example.androidtutorial2.tests.ui.TestsFragment"
+        android:label="fragment_tests"
+        tools:layout="@layout/fragment_tests" />
+    <fragment
+        android:id="@+id/subThemesFragment"
+        android:name="com.example.androidtutorial2.sub_themes.ui.SubThemesFragment"
+        android:label="fragment_sub_themes"
+        tools:layout="@layout/fragment_sub_themes" >
+        <action
+            android:id="@+id/action_subThemesFragment_to_materialStudyFragment"
+            app:destination="@id/materialStudyFragment" />
+    </fragment>
+</navigation>
