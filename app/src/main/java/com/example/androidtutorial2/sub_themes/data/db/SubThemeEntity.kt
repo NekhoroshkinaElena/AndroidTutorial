@@ -20,6 +20,8 @@ data class SubThemeEntity(
     val id: Int,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "material_of_study")
+    val materialStudy: String,
     @ColumnInfo(name = "theme_id")
     val themeId: Int
 )

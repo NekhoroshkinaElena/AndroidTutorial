@@ -9,4 +9,8 @@ class SubThemeInteractorImpl @Inject constructor(
     override suspend fun getAllSubThemes(): List<SubTheme> {
         return subThemesRepository.getAllSubThemes()
     }
+
+    override suspend fun getSubThemes(themeId: Int): List<SubTheme> {
+        return subThemesRepository.getSubThemes(themeId)
+    }
 }

@@ -1,3 +1,10 @@
 package com.example.androidtutorial2.sub_themes.domain
 
-data class SubTheme(val name: String)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class SubTheme(
+    val name: String,
+    val materialStudy: String
+) : Parcelable

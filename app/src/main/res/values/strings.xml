@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidTutorial2</string>
+    <string name="test_material">AndroidTutorial2</string>
+    <string name="questions_for_self_control">Вопросы для самоконтроля</string>
 </resources>
