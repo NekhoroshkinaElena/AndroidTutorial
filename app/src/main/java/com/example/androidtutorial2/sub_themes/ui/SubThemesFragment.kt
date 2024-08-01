@@ -53,6 +53,13 @@ class SubThemesFragment : Fragment() {
 
         initializeObservers()
         initializeAdapter()
+        initializeListeners()
+    }
+
+    private fun initializeListeners(){
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun initializeObservers() {

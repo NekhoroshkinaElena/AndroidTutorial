@@ -12,6 +12,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.databinding.FragmentRepeatBinding
 import kotlinx.coroutines.delay
@@ -36,6 +37,14 @@ class RepeatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeListeners()
+    }
+
+    private fun initializeListeners() {
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.viewQuestion.setOnClickListener {
             if (isClickableQuestion) {
@@ -59,6 +68,7 @@ class RepeatFragment : Fragment() {
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

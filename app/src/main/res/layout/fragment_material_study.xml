@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="none"
-        android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -45,6 +44,7 @@
                 android:id="@+id/tvThemeDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -53,11 +53,12 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="32dp"
                 android:text="@string/questions_for_self_control"
                 android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvThemeDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
