@@ -55,6 +55,7 @@ dependencies {
     // room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.androidx.preference)
     ksp(libs.room.compiler)
     implementation(libs.androidx.ui.desktop)
 

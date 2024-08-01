@@ -8,15 +8,6 @@
     android:orientation="vertical"
     tools:context=".repeat.ui.RepeatFragment">
 
-    <Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentInsetStartWithNavigation="0dp"
-        android:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:title="Повторение материала" />
-
     <FrameLayout
         android:id="@+id/view_question"
         android:layout_width="wrap_content"

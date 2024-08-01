@@ -98,6 +98,11 @@ class SubThemesFragment : Fragment() {
         binding.tvErrorMessage.isVisible = true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
         private const val THEME_ID = "theme_id"
 
