@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.databinding.FragmentSubThemesBinding
-import com.example.androidtutorial2.sub_themes.domain.SubTheme
+import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.sub_themes.ui.adapter.SubThemesAdapter
 import javax.inject.Inject
 
@@ -25,9 +25,10 @@ class SubThemesFragment : Fragment() {
     private var _binding: FragmentSubThemesBinding? = null
     private val binding get() = _binding!!
 
-    private val subThemeAdapter = SubThemesAdapter { _ ->
+    private val subThemeAdapter = SubThemesAdapter { subThemes ->
         findNavController().navigate(
-            R.id.action_subThemesFragment_to_materialStudyFragment
+            R.id.action_subThemesFragment_to_materialStudyFragment,
+            MaterialStudyFragment.createArguments(subThemes)
         )
     }
 
@@ -46,8 +47,19 @@ class SubThemesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val themeId: Int = requireArguments().getInt(THEME_ID)
+        viewModel.getSubThemes(themeId)
+
         initializeObservers()
         initializeAdapter()
+        initializeListeners()
+    }
+
+    private fun initializeListeners(){
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun initializeObservers() {
@@ -86,11 +98,16 @@ class SubThemesFragment : Fragment() {
         binding.tvErrorMessage.isVisible = true
     }
 
-    companion object {
-        private const val SUB_THEMES = "sub_themes"
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-        fun createArgs(subThemes: List<SubTheme>?): Bundle {
-            return bundleOf(SUB_THEMES to subThemes)
+    companion object {
+        private const val THEME_ID = "theme_id"
+
+        fun createArgs(themeId: Int): Bundle {
+            return bundleOf(THEME_ID to themeId)
         }
     }
 }

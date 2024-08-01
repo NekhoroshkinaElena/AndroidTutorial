@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/themesFragment">
+    app:startDestination="@id/homeFragment">
 
 
     <fragment
@@ -49,9 +49,34 @@
         android:id="@+id/subThemesFragment"
         android:name="com.example.androidtutorial2.sub_themes.ui.SubThemesFragment"
         android:label="fragment_sub_themes"
-        tools:layout="@layout/fragment_sub_themes" >
+        tools:layout="@layout/fragment_sub_themes">
         <action
             android:id="@+id/action_subThemesFragment_to_materialStudyFragment"
             app:destination="@id/materialStudyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.androidtutorial2.home.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.androidtutorial2.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/studyFragment"
+        android:name="com.example.androidtutorial2.study.ui.StudyFragment"
+        android:label="fragment_study"
+        tools:layout="@layout/fragment_study">
+        <action
+            android:id="@+id/action_studyFragment_to_themesFragment"
+            app:destination="@id/themesFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_repeatFragment"
+            app:destination="@id/repeatFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_themeFragment"
+            app:destination="@id/themeFragment" />
     </fragment>
 </navigation>

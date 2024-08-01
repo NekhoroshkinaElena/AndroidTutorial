@@ -16,7 +16,7 @@ class DataModule {
         return Room.databaseBuilder(
             context, TutorialDb::class.java, "tutorial.db"
         )
-            .createFromAsset("tutorial2.db")
+            .createFromAsset("tutorial3.db")
             .build()
     }
 }

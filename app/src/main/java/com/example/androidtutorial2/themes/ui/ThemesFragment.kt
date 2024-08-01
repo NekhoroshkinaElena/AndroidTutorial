@@ -26,7 +26,7 @@ class ThemesFragment : Fragment() {
 
     private val themeAdapter = ThemesAdapter { theme ->
         findNavController().navigate(
-            R.id.action_themesFragment_to_themeFragment,
+            R.id.action_studyFragment_to_themeFragment,
             ThemeFragment.createArguments(theme)
         )
     }
@@ -90,5 +90,9 @@ class ThemesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance() = ThemesFragment()
     }
 }

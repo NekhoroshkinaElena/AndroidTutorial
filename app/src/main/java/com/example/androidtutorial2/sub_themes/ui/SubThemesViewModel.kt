@@ -15,11 +15,11 @@ class SubThemesViewModel @Inject constructor(
     private val _screenState = MutableLiveData<SubThemesScreenState>(SubThemesScreenState.Loading)
     val screenState: LiveData<SubThemesScreenState> = _screenState
 
-    init {
+    fun getSubThemes(themeId: Int){
         viewModelScope.launch {
             _screenState.postValue(
                 SubThemesScreenState
-                    .Content(subThemesInteractor.getAllSubThemes())
+                    .Content(subThemesInteractor.getSubThemes(themeId))
             )
         }
     }

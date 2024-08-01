@@ -9,7 +9,13 @@ class SubThemeRepositoryImpl @Inject constructor(private val db: TutorialDb) : S
 
     override suspend fun getAllSubThemes(): List<SubTheme> {
         return db.getSubThemeDao().getAllSubThemes().map {
-            SubTheme(it.name)
+            SubTheme(it.name, "")
+        }
+    }
+
+    override suspend fun getSubThemes(themeId: Int): List<SubTheme> {
+        return db.getSubThemeDao().getSubThemes(themeId).map {
+            SubTheme(it.name, it.materialStudy)
         }
     }
 }
