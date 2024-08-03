@@ -1,26 +1,37 @@
 package com.example.androidtutorial2.material_study.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyBinding
 import com.example.androidtutorial2.sub_themes.domain.SubTheme
 import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import javax.inject.Inject
 
 class MaterialStudyFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModel: MaterialStudyViewModel
 
     private var _binding: FragmentMaterialStudyBinding? = null
     private val binding get() = _binding!!
 
-    private var bottomSheetContainer: LinearLayout? = null
-    private var bottomSheetBehavior: BottomSheetBehavior<LinearLayout?>? = null
+    private var bottomSheetContainer: ConstraintLayout? = null
+    private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout?>? = null
+
+    override fun onAttach(context: Context) {
+        (requireActivity().application as TutorialApplication).appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +58,8 @@ class MaterialStudyFragment : Fragment() {
                 TagHandler()
             )
         binding.toolbar.title = subTheme?.name
+
+        viewModel.get()
     }
 
     private fun initializeListeners() {
@@ -56,6 +69,10 @@ class MaterialStudyFragment : Fragment() {
 
         binding.questions.setOnClickListener {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        binding.ivClose.setOnClickListener {
+            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }
 
