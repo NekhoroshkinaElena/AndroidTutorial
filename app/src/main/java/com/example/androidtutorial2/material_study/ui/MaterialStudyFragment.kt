@@ -1,5 +1,6 @@
 package com.example.androidtutorial2.material_study.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyBinding
+import com.example.androidtutorial2.material_study.ui.adapter.QuestionAdapter
 import com.example.androidtutorial2.sub_themes.domain.SubTheme
 import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -27,6 +29,10 @@ class MaterialStudyFragment : Fragment() {
 
     private var bottomSheetContainer: ConstraintLayout? = null
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout?>? = null
+
+    private val questionsAdapter = QuestionAdapter { question, binding ->
+
+    }
 
     override fun onAttach(context: Context) {
         (requireActivity().application as TutorialApplication).appComponent.inject(this)
@@ -44,6 +50,8 @@ class MaterialStudyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeListeners()
+        initializeObservers()
+        initializeAdapter()
 
         bottomSheetContainer = binding.standardBottomSheet
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer!!)
@@ -79,6 +87,29 @@ class MaterialStudyFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializeObservers() {
+        viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
+            when (screenState) {
+                is QuestionsScreenState.Content -> showContent(screenState)
+                else -> showLoading()
+            }
+        }
+    }
+
+    private fun initializeAdapter() {
+        binding.rvAnswer.adapter = questionsAdapter
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showContent(screenState: QuestionsScreenState.Content) {
+        questionsAdapter.questions.clear()
+        questionsAdapter.questions.addAll(screenState.listQuestions)
+        questionsAdapter.notifyDataSetChanged()
+    }
+
+    private fun showLoading() {
     }
 
     companion object {

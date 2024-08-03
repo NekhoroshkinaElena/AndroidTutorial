@@ -116,9 +116,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvQuestions" />
+            app:layout_constraintTop_toBottomOf="@id/tvQuestions"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
