@@ -71,11 +71,11 @@
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/standard_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="540dp"
-        android:background="@color/light_gray"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_sheer_round"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         app:behavior_hideable="true"
@@ -83,24 +83,44 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <View
+            android:id="@+id/ivRectangle"
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/white" />
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvQuestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
             android:text="Вопросы для самопроверки"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/ivRectangle" />
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAnswer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvQuestions"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

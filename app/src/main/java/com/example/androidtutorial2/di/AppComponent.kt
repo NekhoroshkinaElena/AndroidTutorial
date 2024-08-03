@@ -1,6 +1,7 @@
 package com.example.androidtutorial2.di
 
 import android.content.Context
+import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
 import com.example.androidtutorial2.themes.ui.ThemesFragment
 import dagger.BindsInstance
@@ -14,6 +15,8 @@ interface AppComponent {
     fun inject(themesFragment: ThemesFragment)
 
     fun inject(subThemesFragment: SubThemesFragment)
+
+    fun inject(materialStudyFragment: MaterialStudyFragment)
 
     @Component.Factory
     interface Factory {

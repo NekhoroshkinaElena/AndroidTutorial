@@ -1,26 +1,43 @@
 package com.example.androidtutorial2.material_study.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyBinding
+import com.example.androidtutorial2.material_study.ui.adapter.QuestionAdapter
 import com.example.androidtutorial2.sub_themes.domain.SubTheme
 import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import javax.inject.Inject
 
 class MaterialStudyFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModel: MaterialStudyViewModel
 
     private var _binding: FragmentMaterialStudyBinding? = null
     private val binding get() = _binding!!
 
-    private var bottomSheetContainer: LinearLayout? = null
-    private var bottomSheetBehavior: BottomSheetBehavior<LinearLayout?>? = null
+    private var bottomSheetContainer: ConstraintLayout? = null
+    private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout?>? = null
+
+    private val questionsAdapter = QuestionAdapter { question, binding ->
+
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity().application as TutorialApplication).appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +50,8 @@ class MaterialStudyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeListeners()
+        initializeObservers()
+        initializeAdapter()
 
         bottomSheetContainer = binding.standardBottomSheet
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer!!)
@@ -47,6 +66,8 @@ class MaterialStudyFragment : Fragment() {
                 TagHandler()
             )
         binding.toolbar.title = subTheme?.name
+
+        viewModel.get()
     }
 
     private fun initializeListeners() {
@@ -57,11 +78,38 @@ class MaterialStudyFragment : Fragment() {
         binding.questions.setOnClickListener {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
         }
+
+        binding.ivClose.setOnClickListener {
+            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializeObservers() {
+        viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
+            when (screenState) {
+                is QuestionsScreenState.Content -> showContent(screenState)
+                else -> showLoading()
+            }
+        }
+    }
+
+    private fun initializeAdapter() {
+        binding.rvAnswer.adapter = questionsAdapter
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showContent(screenState: QuestionsScreenState.Content) {
+        questionsAdapter.questions.clear()
+        questionsAdapter.questions.addAll(screenState.listQuestions)
+        questionsAdapter.notifyDataSetChanged()
+    }
+
+    private fun showLoading() {
     }
 
     companion object {

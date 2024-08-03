@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/pt_serif_caption_regular</item>
+    </style>
+
+    <style name="ToolbarStyle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:fontFamily">@font/pt_serif_caption_regular</item>
+    </style>
+
+</resources>
