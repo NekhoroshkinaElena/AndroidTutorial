@@ -31,26 +31,32 @@ class ThemeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         theme = requireArguments().getParcelable(THEME)
         initializeListeners()
+
+        binding.toolbar.title = theme?.name
     }
 
     private fun initializeListeners() {
-        binding.tvLearn.setOnClickListener {
+        binding.cvTheory.setOnClickListener {
             findNavController().navigate(
                 R.id.action_themeFragment_to_subThemesFragment,
                 SubThemesFragment.createArgs(themeId = theme!!.id)
             )
         }
 
-        binding.tvRepeat.setOnClickListener {
+        binding.cvRepeat.setOnClickListener {
             findNavController().navigate(
                 R.id.action_themeFragment_to_repeatFragment
             )
         }
 
-        binding.tvTests.setOnClickListener {
+        binding.cvTest.setOnClickListener {
             findNavController().navigate(
                 R.id.action_themeFragment_to_testsFragment
             )
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

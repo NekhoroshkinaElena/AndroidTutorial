@@ -1,6 +1,5 @@
 package com.example.androidtutorial2.material_study.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +24,6 @@ class MaterialStudyViewModel @Inject constructor(
                     )
                 )
             )
-            Log.i("TAG2", ": ${materialStudyInteractor.getQuestions(5)}")
         }
     }
 }
