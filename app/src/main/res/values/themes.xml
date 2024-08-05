@@ -5,7 +5,9 @@
         <item name="colorOnPrimary">@color/black</item>
 
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@color/snow</item>
+        <item name="android:navigationBarColor">@color/snow</item>
     </style>
 
     <style name="Theme.AndroidTutorial2" parent="Base.Theme.AndroidTutorial2" />

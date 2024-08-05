@@ -9,12 +9,12 @@
         android:id="@+id/cvThemeName"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginVertical="12dp"
         android:layout_marginHorizontal="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:layout_marginVertical="12dp"
         android:outlineAmbientShadowColor="@color/light_gray"
         android:outlineSpotShadowColor="@color/light_gray"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,10 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
             android:gravity="center_vertical"
-            android:fontFamily="@font/pt_serif_caption_regular"
-            android:text="Тема для изучения" />
+            android:text="Тема для изучения"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </androidx.cardview.widget.CardView>
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/snow"
     tools:context=".study.ui.StudyFragment">
 
 
@@ -20,7 +21,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/snow"
         app:tabIndicatorColor="@color/black"
         app:tabTextAppearance="@style/TabLayoutTextStyle"
         app:tabIndicatorFullWidth="false"
