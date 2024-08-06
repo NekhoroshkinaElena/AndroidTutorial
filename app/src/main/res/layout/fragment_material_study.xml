@@ -31,8 +31,8 @@
                     android:layout_marginEnd="48dp"
                     android:contentInsetStartWithNavigation="0dp"
                     android:navigationIcon="@drawable/ic_arrow_back"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:titleTextAppearance="@style/ToolbarStyle"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:title="Материал для изучения" />
 
                 <TextView
@@ -40,9 +40,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
+                    android:fontFamily="@font/montserrat_regular"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:fontFamily="@font/montserrat_regular"
                     app:layout_constraintTop_toBottomOf="@id/toolbar"
                     tools:text="теория" />
 
@@ -52,8 +52,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="32dp"
+                    android:background="@drawable/button_round"
+                    android:backgroundTint="@color/yellow"
+                    android:fontFamily="@font/montserrat_regular"
                     android:text="@string/questions_for_self_control"
                     android:textAllCaps="false"
+                    android:textSize="14sp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvThemeDescription" />
@@ -79,7 +83,8 @@
             android:layout_height="4dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/black"
+            android:background="@drawable/button_round"
+            android:backgroundTint="@color/light_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,12 +93,12 @@
             android:id="@+id/tvQuestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Вопросы для самопроверки"
+            android:text="@string/self_test_questions"
             android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/ivRectangle" />
 
         <ImageView
@@ -110,8 +115,8 @@
             android:id="@+id/rvAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvQuestions"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tvQuestions" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
