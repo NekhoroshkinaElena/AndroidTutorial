@@ -15,12 +15,12 @@ class MaterialStudyViewModel @Inject constructor(
     private val _screenState = MutableLiveData<QuestionsScreenState>(QuestionsScreenState.Loading)
     val screenState: LiveData<QuestionsScreenState> = _screenState
 
-    fun get() {
+    fun get(subThemeId: Int) {
         viewModelScope.launch {
             _screenState.postValue(
                 QuestionsScreenState.Content(
                     materialStudyInteractor.getQuestions(
-                        5
+                        subThemeId
                     )
                 )
             )

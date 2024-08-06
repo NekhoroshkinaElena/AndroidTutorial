@@ -8,29 +8,22 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvSubTheme"
+        style="@style/cardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_margin="16dp"
-        android:outlineAmbientShadowColor="@color/light_gray"
-        android:outlineSpotShadowColor="@color/light_gray"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvSubthemeName"
+            android:id="@+id/tvSubThemeName"
+            style="@style/Regular_14"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingHorizontal="16dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:textSize="16sp"
-            android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Theme" />
 
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,9 @@ class MaterialStudyFragment : Fragment() {
             )
         binding.toolbar.title = subTheme?.name
 
-        viewModel.get()
+        if (subTheme != null) {
+            viewModel.get(subTheme.id)
+        }
     }
 
     private fun initializeListeners() {

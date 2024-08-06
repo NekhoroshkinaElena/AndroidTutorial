@@ -33,9 +33,9 @@
 
     <TextView
         android:id="@+id/tvErrorMessage"
+        style="@style/Regular_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
         android:text="Возникла ошибка, повторите попытку позже"
         app:layout_constraintBottom_toBottomOf="parent"

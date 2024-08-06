@@ -26,25 +26,20 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvTheory"
+        style="@style/cardStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:outlineAmbientShadowColor="@color/light_gray"
-        android:outlineSpotShadowColor="@color/light_gray"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@id/cvRepeat"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
 
         <TextView
+            style="@style/Regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:textSize="16sp"
-            android:text="@string/theory"
-            android:textColor="@color/black" />
+            android:text="@string/theory" />
 
     </androidx.cardview.widget.CardView>
 
@@ -61,13 +56,11 @@
         app:layout_constraintTop_toBottomOf="@id/cvTheory">
 
         <TextView
+            style="@style/Regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:text="@string/repeat"
-            android:textSize="16sp"
-            android:textColor="@color/black" />
+            android:text="@string/repeat" />
 
     </androidx.cardview.widget.CardView>
 
@@ -84,14 +77,11 @@
         app:layout_constraintTop_toBottomOf="@id/cvRepeat">
 
         <TextView
+            style="@style/Regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:textSize="16sp"
-            android:text="@string/testing"
-            android:textColor="@color/black" />
+            android:text="@string/testing" />
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
