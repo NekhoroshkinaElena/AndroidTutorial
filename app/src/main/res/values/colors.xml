@@ -2,8 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="dark_gray">#575757</color>
+    <color name="gray_translucent">#27575757</color>
     <color name="light_gray">#B5B5B5</color>
-    <color name="snow">#FFFAFA</color>
+    <color name="platinum">#e5e4e2</color>
+    <color name="snow">#F9F9F9</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_blue">#AE7FDCF4</color>
+    <color name="yellow">#FFD66F</color>
+    <color name="orange">#FF9800</color>
 </resources>

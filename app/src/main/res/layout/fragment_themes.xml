@@ -18,10 +18,11 @@
         android:id="@+id/pbProgressBar"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:indeterminateTint="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvErrorMessage"
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Возникла ошибка, повторите попытку позже"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

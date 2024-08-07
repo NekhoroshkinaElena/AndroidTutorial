@@ -13,6 +13,6 @@ class SubThemesViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(subtheme: SubTheme) {
-        binding.tvSubthemeName.text = subtheme.name
+        binding.tvSubThemeName.text = subtheme.name
     }
 }

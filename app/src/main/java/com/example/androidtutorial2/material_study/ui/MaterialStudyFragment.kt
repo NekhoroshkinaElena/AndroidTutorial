@@ -61,13 +61,15 @@ class MaterialStudyFragment : Fragment() {
         val subTheme: SubTheme? = requireArguments().getParcelable(MATERIAL_TO_STUDY)
         binding.tvThemeDescription.text =
             Html.fromHtml(
-                subTheme?.materialStudy,
+                "<z>mkjkjhkjh, <p><z>njhkjhkjhkjh",
                 null,
                 TagHandler()
             )
         binding.toolbar.title = subTheme?.name
 
-        viewModel.get()
+        if (subTheme != null) {
+            viewModel.get(subTheme.id)
+        }
     }
 
     private fun initializeListeners() {

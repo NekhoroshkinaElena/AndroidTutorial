@@ -41,27 +41,27 @@ class RepeatFragment : Fragment() {
 
     private fun initializeListeners() {
 
-        binding.viewQuestion.setOnClickListener {
-            if (isClickableQuestion) {
-                flipCard(requireActivity(), binding.viewAnswer, binding.viewQuestion)
-                isClickableQuestion = false
-                lifecycleScope.launch {
-                    delay(1000)
-                    isClickableAnswer = true
-                }
-            }
-        }
-
-        binding.viewAnswer.setOnClickListener {
-            if (isClickableAnswer) {
-                flipCard(requireActivity(), binding.viewQuestion, binding.viewAnswer)
-                isClickableAnswer = false
-                lifecycleScope.launch {
-                    delay(1000)
-                    isClickableQuestion = true
-                }
-            }
-        }
+//        binding.viewQuestion.setOnClickListener {
+//            if (isClickableQuestion) {
+//                flipCard(requireActivity(), binding.viewAnswer, binding.viewQuestion)
+//                isClickableQuestion = false
+//                lifecycleScope.launch {
+//                    delay(1000)
+//                    isClickableAnswer = true
+//                }
+//            }
+//        }
+//
+//        binding.viewAnswer.setOnClickListener {
+//            if (isClickableAnswer) {
+//                flipCard(requireActivity(), binding.viewQuestion, binding.viewAnswer)
+//                isClickableAnswer = false
+//                lifecycleScope.launch {
+//                    delay(1000)
+//                    isClickableQuestion = true
+//                }
+//            }
+//        }
     }
 
 

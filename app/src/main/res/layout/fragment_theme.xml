@@ -1,39 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
     android:orientation="vertical"
     tools:context=".theme.ui.ThemeFragment">
 
-    <TextView
-        android:id="@+id/tvLearn"
+    <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/button_theme_background"
-        android:gravity="center"
-        android:text="Изучение"
-        android:textSize="22sp" />
+        android:contentInsetStartWithNavigation="0dp"
+        android:navigationIcon="@drawable/ic_arrow_back"
+        android:titleTextAppearance="@style/ToolbarStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:title="Материал для изучения" />
 
-    <TextView
-        android:id="@+id/tvRepeat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/button_theme_background"
-        android:gravity="center"
-        android:text="Повторение"
-        android:textSize="22sp" />
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/centralGuideline"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintGuide_percent="0.2" />-->
 
-    <TextView
-        android:id="@+id/tvTests"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvTheory"
+        style="@style/cardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/button_theme_background"
-        android:gravity="center"
-        android:text="Тестирование"
-        android:textSize="22sp" />
-</LinearLayout>
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/cvRepeat"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+
+        <TextView
+            style="@style/Regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/theory" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:outlineAmbientShadowColor="@color/light_gray"
+        android:outlineSpotShadowColor="@color/light_gray"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/cvTest"
+        app:layout_constraintTop_toBottomOf="@id/cvTheory">
+
+        <TextView
+            style="@style/Regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/repeat" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvTest"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:outlineAmbientShadowColor="@color/light_gray"
+        android:outlineSpotShadowColor="@color/light_gray"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvRepeat">
+
+        <TextView
+            style="@style/Regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/testing" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

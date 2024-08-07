@@ -1,6 +1,5 @@
 package com.example.androidtutorial2.material_study.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,16 +15,15 @@ class MaterialStudyViewModel @Inject constructor(
     private val _screenState = MutableLiveData<QuestionsScreenState>(QuestionsScreenState.Loading)
     val screenState: LiveData<QuestionsScreenState> = _screenState
 
-    fun get() {
+    fun get(subThemeId: Int) {
         viewModelScope.launch {
             _screenState.postValue(
                 QuestionsScreenState.Content(
                     materialStudyInteractor.getQuestions(
-                        5
+                        subThemeId
                     )
                 )
             )
-            Log.i("TAG2", ": ${materialStudyInteractor.getQuestions(5)}")
         }
     }
 }

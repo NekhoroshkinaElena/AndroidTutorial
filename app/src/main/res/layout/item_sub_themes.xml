@@ -4,22 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary">
+    android:background="@color/snow">
 
-    <TextView
-        android:id="@+id/tvSubthemeName"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSubTheme"
+        style="@style/cardStyle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Theme" />
+        android:layout_height="80dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tvSubthemeName" />
+        <TextView
+            android:id="@+id/tvSubThemeName"
+            style="@style/Regular_14"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Theme" />
 
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
