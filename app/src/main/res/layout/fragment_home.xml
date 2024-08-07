@@ -57,11 +57,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
+            android:id="@+id/ivRecommendation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.3"
             android:scaleType="centerCrop" />
-
 
         <TextView
             style="@style/Medium_16"
@@ -87,6 +87,7 @@
         app:layout_constraintStart_toEndOf="@id/cvRecommendations">
 
         <ImageView
+            android:id="@+id/ivLearn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.5"
@@ -115,6 +116,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
+            android:id="@+id/ivExample"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.5"
@@ -144,6 +146,7 @@
         app:layout_constraintStart_toEndOf="@id/cvExample">
 
         <ImageView
+            android:id="@+id/ivStats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.5"
@@ -157,6 +160,5 @@
             android:paddingTop="16dp"
             android:text="@string/stats" />
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
