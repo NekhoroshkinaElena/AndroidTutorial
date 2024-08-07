@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.androidtutorial2.R
 import com.example.androidtutorial2.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -18,6 +20,20 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeListeners()
+    }
+
+    private fun initializeListeners() {
+        binding.cvLearn.setOnClickListener {
+        }
+
+        binding.cvExample.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_evampleFragment)
+        }
     }
 
     override fun onDestroyView() {
