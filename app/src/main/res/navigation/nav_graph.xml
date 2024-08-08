@@ -58,7 +58,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.androidtutorial2.home.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_evampleFragment"
+            app:destination="@id/exampleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.androidtutorial2.settings.SettingsFragment"
@@ -79,4 +83,9 @@
             android:id="@+id/action_studyFragment_to_themeFragment"
             app:destination="@id/themeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/exampleFragment"
+        android:name="com.example.androidtutorial2.example.ExampleFragment"
+        android:label="fragment_example"
+        tools:layout="@layout/fragment_example" />
 </navigation>
