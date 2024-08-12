@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -25,10 +26,18 @@ class ThemesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val themeAdapter = ThemesAdapter { theme ->
-        findNavController().navigate(
-            R.id.action_studyFragment_to_themeFragment,
-            ThemeFragment.createArguments(theme)
-        )
+        if (!theme.blocked) {
+            findNavController().navigate(
+                R.id.action_studyFragment_to_themeFragment,
+                ThemeFragment.createArguments(theme)
+            )
+        } else {
+            Toast.makeText(
+                requireActivity(),
+                "Данные темы будут доступны позже",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onAttach(context: Context) {
