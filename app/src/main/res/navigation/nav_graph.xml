@@ -62,6 +62,15 @@
         <action
             android:id="@+id/action_homeFragment_to_evampleFragment"
             app:destination="@id/exampleFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_studyFragment"
+            app:destination="@id/studyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recommendationsFragment"
+            app:destination="@id/recommendationsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -88,4 +97,14 @@
         android:name="com.example.androidtutorial2.example.ExampleFragment"
         android:label="fragment_example"
         tools:layout="@layout/fragment_example" />
+    <fragment
+        android:id="@+id/recommendationsFragment"
+        android:name="com.example.androidtutorial2.recommendations.ui.RecommendationsFragment"
+        android:label="fragment_recommendations"
+        tools:layout="@layout/fragment_recommendations" />
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.androidtutorial2.stats.ui.StatsFragment"
+        android:label="fragment_stats"
+        tools:layout="@layout/fragment_stats" />
 </navigation>

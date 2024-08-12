@@ -36,10 +36,19 @@ class HomeFragment : Fragment() {
 
     private fun initializeListeners() {
         binding.cvLearn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_studyFragment)
         }
 
         binding.cvExample.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_evampleFragment)
+        }
+
+        binding.cvStats.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_statsFragment)
+        }
+
+        binding.cvRecommendations.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_recommendationsFragment)
         }
     }
 
