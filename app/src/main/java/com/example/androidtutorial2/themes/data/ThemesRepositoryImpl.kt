@@ -10,7 +10,7 @@ class ThemesRepositoryImpl @Inject constructor(private val db: TutorialDb) : The
 
     override suspend fun getListThemes(): List<Theme> {
         return db.getThemeDao().getAllThemes().map {
-            Theme(it.id, it.name)
+            Theme(it.id, it.name, it.blocked != 0)
         }
     }
 }

@@ -12,5 +12,8 @@ data class ThemeEntity(
     val id: Int,
 
     @ColumnInfo(name = "name")
-    val name: String
+    val name: String,
+
+    @ColumnInfo(name = "blocking")
+    val blocked: Int
 )
