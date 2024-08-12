@@ -34,7 +34,7 @@ class ThemesFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireActivity(),
-                "Данные темы будут доступны позже",
+                getString(R.string.theme_lock),
                 Toast.LENGTH_SHORT
             ).show()
         }
