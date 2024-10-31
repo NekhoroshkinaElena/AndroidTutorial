@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.databinding.FragmentThemesBinding
-import com.example.androidtutorial2.theme.ui.ThemeFragment
+import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
 import com.example.androidtutorial2.themes.ui.adapter.ThemesAdapter
 import javax.inject.Inject
 
@@ -28,8 +28,8 @@ class ThemesFragment : Fragment() {
     private val themeAdapter = ThemesAdapter { theme ->
         if (!theme.blocked) {
             findNavController().navigate(
-                R.id.action_studyFragment_to_themeFragment,
-                ThemeFragment.createArguments(theme)
+                R.id.action_studyFragment_to_subThemesFragment,
+                SubThemesFragment.createArgs(theme.id, theme.name)
             )
         } else {
             Toast.makeText(

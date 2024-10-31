@@ -9,31 +9,6 @@
     tools:context=".home.ui.HomeFragment">
 
     <ImageView
-        android:id="@+id/ivPerson"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="@color/light_gray"
-        android:src="@drawable/ic_person"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/Regular_16"
-        android:layout_width="225dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Здравствуйте, Елена!"
-        app:layout_constraintBottom_toBottomOf="@+id/ivPerson"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPerson"
-        app:layout_constraintTop_toTopOf="@+id/ivPerson" />
-
-    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -49,19 +24,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        app:cardBackgroundColor="@color/light_green"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/cvExample"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/cvLearn"
         app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/ivRecommendation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.3"
-            android:scaleType="centerCrop" />
 
         <TextView
             style="@style/Medium_16"
@@ -81,17 +50,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/cvStats"
         app:layout_constraintDimensionRatio="1:1"
+        app:cardBackgroundColor="@color/light_blue"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/cvRecommendations">
-
-        <ImageView
-            android:id="@+id/ivLearn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:scaleType="centerCrop" />
 
         <TextView
             style="@style/Medium_16"
@@ -100,65 +63,6 @@
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:text="@string/learn" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvExample"
-        style="@style/cardStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@id/cvStats"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/ivExample"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            style="@style/Medium_16"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:text="@string/examples" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvStats"
-        style="@style/cardStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cvExample">
-
-        <ImageView
-            android:id="@+id/ivStats"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            style="@style/Medium_16"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:text="@string/stats" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,7 +68,7 @@ class MaterialStudyFragment : Fragment() {
         binding.toolbar.title = subTheme?.name
 
         if (subTheme != null) {
-            viewModel.get(subTheme.id)
+            viewModel.getListQuestions(subTheme.id)
         }
     }
 

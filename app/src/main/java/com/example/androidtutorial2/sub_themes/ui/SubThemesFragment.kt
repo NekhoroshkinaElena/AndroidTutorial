@@ -81,6 +81,7 @@ class SubThemesFragment : Fragment() {
         binding.pbProgressBar.isVisible = false
         binding.rvSubThemesList.isVisible = true
         binding.tvErrorMessage.isVisible = false
+        binding.toolbar.title = requireArguments().getString(THEME_NAME) ?: ""
         subThemeAdapter.subthemes.clear()
         subThemeAdapter.subthemes.addAll(screenState.listThemes)
         subThemeAdapter.notifyDataSetChanged()
@@ -105,9 +106,10 @@ class SubThemesFragment : Fragment() {
 
     companion object {
         private const val THEME_ID = "theme_id"
+        private const val THEME_NAME = "theme_name"
 
-        fun createArgs(themeId: Int): Bundle {
-            return bundleOf(THEME_ID to themeId)
+        fun createArgs(themeId: Int, themeName: String): Bundle {
+            return bundleOf(THEME_ID to themeId, THEME_NAME to themeName)
         }
     }
 }

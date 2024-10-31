@@ -1,26 +1,26 @@
 package com.example.androidtutorial2.sub_themes.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidtutorial2.base.BaseViewModel
+import com.example.androidtutorial2.sub_themes.domain.SubTheme
 import com.example.androidtutorial2.sub_themes.domain.SubThemesInteractor
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SubThemesViewModel @Inject constructor(
     private val subThemesInteractor: SubThemesInteractor
-) : ViewModel() {
+) : BaseViewModel<SubThemesScreenState>(SubThemesScreenState.Loading) {
 
-    private val _screenState = MutableLiveData<SubThemesScreenState>(SubThemesScreenState.Loading)
-    val screenState: LiveData<SubThemesScreenState> = _screenState
+    private var subThemes: List<SubTheme> = emptyList()
 
-    fun getSubThemes(themeId: Int){
-        viewModelScope.launch {
-            _screenState.postValue(
-                SubThemesScreenState
-                    .Content(subThemesInteractor.getSubThemes(themeId))
-            )
+    fun getSubThemes(themeId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            subThemes = subThemesInteractor.getSubThemes(themeId)
+            withContext(Dispatchers.Main) {
+                updateScreenState(SubThemesScreenState.Content(subThemes))
+            }
         }
     }
 }

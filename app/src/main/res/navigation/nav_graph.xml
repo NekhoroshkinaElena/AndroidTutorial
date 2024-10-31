@@ -10,41 +10,12 @@
         android:id="@+id/themesFragment"
         android:name="com.example.androidtutorial2.themes.ui.ThemesFragment"
         android:label="fragment_themes"
-        tools:layout="@layout/fragment_themes">
-        <action
-            android:id="@+id/action_themesFragment_to_themeFragment"
-            app:destination="@id/themeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/themeFragment"
-        android:name="com.example.androidtutorial2.theme.ui.ThemeFragment"
-        android:label="fragment_theme"
-        tools:layout="@layout/fragment_theme">
-        <action
-            android:id="@+id/action_themeFragment_to_repeatFragment"
-            app:destination="@id/repeatFragment" />
-        <action
-            android:id="@+id/action_themeFragment_to_testsFragment"
-            app:destination="@id/testsFragment" />
-        <action
-            android:id="@+id/action_themeFragment_to_subThemesFragment"
-            app:destination="@id/subThemesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_themes"/>
     <fragment
         android:id="@+id/materialStudyFragment"
         android:name="com.example.androidtutorial2.material_study.ui.MaterialStudyFragment"
         android:label="fragment_material_study"
         tools:layout="@layout/fragment_material_study" />
-    <fragment
-        android:id="@+id/repeatFragment"
-        android:name="com.example.androidtutorial2.repeat.ui.RepeatFragment"
-        android:label="fragment_repeat"
-        tools:layout="@layout/fragment_repeat" />
-    <fragment
-        android:id="@+id/testsFragment"
-        android:name="com.example.androidtutorial2.tests.ui.TestsFragment"
-        android:label="fragment_tests"
-        tools:layout="@layout/fragment_tests" />
     <fragment
         android:id="@+id/subThemesFragment"
         android:name="com.example.androidtutorial2.sub_themes.ui.SubThemesFragment"
@@ -60,17 +31,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_evampleFragment"
-            app:destination="@id/exampleFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_studyFragment"
             app:destination="@id/studyFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_recommendationsFragment"
-            app:destination="@id/recommendationsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_statsFragment"
-            app:destination="@id/statsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -86,25 +48,7 @@
             android:id="@+id/action_studyFragment_to_themesFragment"
             app:destination="@id/themesFragment" />
         <action
-            android:id="@+id/action_studyFragment_to_repeatFragment"
-            app:destination="@id/repeatFragment" />
-        <action
-            android:id="@+id/action_studyFragment_to_themeFragment"
-            app:destination="@id/themeFragment" />
+            android:id="@+id/action_studyFragment_to_subThemesFragment"
+            app:destination="@id/subThemesFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/exampleFragment"
-        android:name="com.example.androidtutorial2.example.ExampleFragment"
-        android:label="fragment_example"
-        tools:layout="@layout/fragment_example" />
-    <fragment
-        android:id="@+id/recommendationsFragment"
-        android:name="com.example.androidtutorial2.recommendations.ui.RecommendationsFragment"
-        android:label="fragment_recommendations"
-        tools:layout="@layout/fragment_recommendations" />
-    <fragment
-        android:id="@+id/statsFragment"
-        android:name="com.example.androidtutorial2.stats.ui.StatsFragment"
-        android:label="fragment_stats"
-        tools:layout="@layout/fragment_stats" />
 </navigation>
