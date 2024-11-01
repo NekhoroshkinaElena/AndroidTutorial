@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.TutorialApplication
+import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyBinding
 import com.example.androidtutorial2.material_study.ui.adapter.QuestionAdapter
 import com.example.androidtutorial2.sub_themes.domain.SubTheme
@@ -19,13 +17,12 @@ import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import javax.inject.Inject
 
-class MaterialStudyFragment : Fragment() {
+class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding>(
+    FragmentMaterialStudyBinding::inflate
+) {
 
     @Inject
     lateinit var viewModel: MaterialStudyViewModel
-
-    private var _binding: FragmentMaterialStudyBinding? = null
-    private val binding get() = _binding!!
 
     private var bottomSheetContainer: ConstraintLayout? = null
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout?>? = null
@@ -37,14 +34,6 @@ class MaterialStudyFragment : Fragment() {
     override fun onAttach(context: Context) {
         (requireActivity().application as TutorialApplication).appComponent.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMaterialStudyBinding.inflate(layoutInflater)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,11 +73,6 @@ class MaterialStudyFragment : Fragment() {
         binding.ivClose.setOnClickListener {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initializeObservers() {

@@ -3,27 +3,24 @@ package com.example.androidtutorial2.sub_themes.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
+import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentSubThemesBinding
 import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.sub_themes.ui.adapter.SubThemesAdapter
 import javax.inject.Inject
 
-class SubThemesFragment : Fragment() {
+class SubThemesFragment : BaseFragment<FragmentSubThemesBinding>(
+    FragmentSubThemesBinding::inflate
+) {
 
     @Inject
     lateinit var viewModel: SubThemesViewModel
-
-    private var _binding: FragmentSubThemesBinding? = null
-    private val binding get() = _binding!!
 
     private val subThemeAdapter = SubThemesAdapter { subThemes ->
         findNavController().navigate(
@@ -37,14 +34,6 @@ class SubThemesFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSubThemesBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,7 +45,7 @@ class SubThemesFragment : Fragment() {
         initializeListeners()
     }
 
-    private fun initializeListeners(){
+    private fun initializeListeners() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -97,11 +86,6 @@ class SubThemesFragment : Fragment() {
         binding.pbProgressBar.isVisible = false
         binding.rvSubThemesList.isVisible = false
         binding.tvErrorMessage.isVisible = true
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

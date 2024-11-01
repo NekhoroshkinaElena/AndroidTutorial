@@ -4,27 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
+import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentRepeatBinding
 import com.example.androidtutorial2.repeat.ui.adapter.RepeatThemesAdapter
 import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
 import javax.inject.Inject
 
-class RepeatFragment : Fragment() {
+class RepeatFragment : BaseFragment<FragmentRepeatBinding>(
+    FragmentRepeatBinding::inflate
+) {
 
     @Inject
     lateinit var viewModel: RepeatViewModel
-
-    private var _binding: FragmentRepeatBinding? = null
-    private val binding get() = _binding!!
 
     private val themeAdapter = RepeatThemesAdapter { theme ->
         if (!theme.blocked) {
@@ -44,14 +41,6 @@ class RepeatFragment : Fragment() {
     override fun onAttach(context: Context) {
         (requireActivity().application as TutorialApplication).appComponent.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentRepeatBinding.inflate(layoutInflater)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,11 +89,6 @@ class RepeatFragment : Fragment() {
         binding.pbProgressBar.isVisible = false
         binding.rvRepeatThemeList.isVisible = false
         binding.tvErrorMessage.isVisible = true
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {
