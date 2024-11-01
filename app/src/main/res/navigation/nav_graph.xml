@@ -50,5 +50,13 @@
         <action
             android:id="@+id/action_studyFragment_to_subThemesFragment"
             app:destination="@id/subThemesFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_repeatFragment"
+            app:destination="@id/repeatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/repeatFragment"
+        android:name="com.example.androidtutorial2.repeat.ui.RepeatFragment"
+        android:label="fragment_repeat"
+        tools:layout="@layout/fragment_repeat" />
 </navigation>

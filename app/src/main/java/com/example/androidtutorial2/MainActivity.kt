@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.androidtutorial2.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.setupWithNavController(navController)
+        val bottomNavigationView = binding.bottomNavigationView
 
         val showList = listOf(
             R.id.homeFragment,
@@ -30,6 +27,27 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, navDestination, _ ->
             binding.bottomNavigationView.isVisible = showList.contains(navDestination.id)
+        }
+
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+
+                R.id.studyFragment -> {
+                    navController.navigate(R.id.studyFragment)
+                    true
+                }
+
+                R.id.settingsFragment -> {
+                    navController.navigate(R.id.settingsFragment)
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 }
