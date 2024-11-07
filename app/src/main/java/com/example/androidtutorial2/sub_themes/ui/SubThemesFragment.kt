@@ -13,14 +13,10 @@ import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentSubThemesBinding
 import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.sub_themes.ui.adapter.SubThemesAdapter
-import javax.inject.Inject
 
-class SubThemesFragment : BaseFragment<FragmentSubThemesBinding>(
+class SubThemesFragment : BaseFragment<FragmentSubThemesBinding, SubThemesViewModel>(
     FragmentSubThemesBinding::inflate
 ) {
-
-    @Inject
-    lateinit var viewModel: SubThemesViewModel
 
     private val subThemeAdapter = SubThemesAdapter { subThemes ->
         findNavController().navigate(

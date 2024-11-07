@@ -14,14 +14,10 @@ import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentRepeatBinding
 import com.example.androidtutorial2.repeat.ui.adapter.RepeatThemesAdapter
 import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
-import javax.inject.Inject
 
-class RepeatFragment : BaseFragment<FragmentRepeatBinding>(
+class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
     FragmentRepeatBinding::inflate
 ) {
-
-    @Inject
-    lateinit var viewModel: RepeatViewModel
 
     private val themeAdapter = RepeatThemesAdapter { theme ->
         if (!theme.blocked) {

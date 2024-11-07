@@ -13,14 +13,10 @@ import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentThemesBinding
 import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
 import com.example.androidtutorial2.themes.ui.adapter.ThemesAdapter
-import javax.inject.Inject
 
-class ThemesFragment : BaseFragment<FragmentThemesBinding>(
+class ThemesFragment : BaseFragment<FragmentThemesBinding, ThemesViewModel>(
     FragmentThemesBinding::inflate
 ) {
-
-    @Inject
-    lateinit var viewModel: ThemesViewModel
 
     private val themeAdapter = ThemesAdapter { theme ->
         if (!theme.blocked) {

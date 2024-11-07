@@ -15,14 +15,10 @@ import com.example.androidtutorial2.material_study.ui.adapter.QuestionAdapter
 import com.example.androidtutorial2.sub_themes.domain.SubTheme
 import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import javax.inject.Inject
 
-class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding>(
+class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, MaterialStudyViewModel>(
     FragmentMaterialStudyBinding::inflate
 ) {
-
-    @Inject
-    lateinit var viewModel: MaterialStudyViewModel
 
     private var bottomSheetContainer: ConstraintLayout? = null
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout?>? = null

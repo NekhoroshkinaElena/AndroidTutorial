@@ -6,6 +6,8 @@ import com.example.androidtutorial2.material_study.domain.MaterialStudyInteracto
 import com.example.androidtutorial2.material_study.domain.Question
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,10 +16,16 @@ class MaterialStudyViewModel @Inject constructor(
 ) : BaseViewModel<QuestionsScreenState>(QuestionsScreenState.Loading) {
 
     private var listQuestions: List<Question> = emptyList()
+    private val questionsMutex = Mutex()
 
     fun getListQuestions(subThemeId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            listQuestions = materialStudyInteractor.getQuestions(subThemeId)
+            val questions = materialStudyInteractor.getQuestions(subThemeId)
+
+            questionsMutex.withLock {
+                listQuestions = questions
+            }
+
             withContext(Dispatchers.Main) {
                 updateScreenState(QuestionsScreenState.Content(listQuestions))
             }
