@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentInsetStartWithNavigation="0dp"
+        android:titleTextAppearance="@style/ToolbarStyle"
         android:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintTop_toTopOf="parent" />
 

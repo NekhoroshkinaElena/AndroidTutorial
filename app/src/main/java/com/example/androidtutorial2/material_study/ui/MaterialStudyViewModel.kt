@@ -1,29 +1,24 @@
 package com.example.androidtutorial2.material_study.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidtutorial2.base.BaseViewModel
 import com.example.androidtutorial2.material_study.domain.MaterialStudyInteractor
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MaterialStudyViewModel @Inject constructor(
     private val materialStudyInteractor: MaterialStudyInteractor
-) : ViewModel() {
+) : BaseViewModel<QuestionsScreenState>(QuestionsScreenState.Loading) {
 
-    private val _screenState = MutableLiveData<QuestionsScreenState>(QuestionsScreenState.Loading)
-    val screenState: LiveData<QuestionsScreenState> = _screenState
+    fun getListQuestions(subThemeId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val questions = materialStudyInteractor.getQuestions(subThemeId)
 
-    fun get(subThemeId: Int) {
-        viewModelScope.launch {
-            _screenState.postValue(
-                QuestionsScreenState.Content(
-                    materialStudyInteractor.getQuestions(
-                        subThemeId
-                    )
-                )
-            )
+            withContext(Dispatchers.Main) {
+                updateScreenState(QuestionsScreenState.Content(questions))
+            }
         }
     }
 }

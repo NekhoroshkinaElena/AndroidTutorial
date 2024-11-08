@@ -1,22 +1,23 @@
 package com.example.androidtutorial2.themes.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidtutorial2.base.BaseViewModel
 import com.example.androidtutorial2.themes.domain.ThemesInteractor
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ThemesViewModel @Inject constructor(private val themesInteractor: ThemesInteractor) :
-    ViewModel() {
-
-    private val _screenState = MutableLiveData<ThemesScreenState>(ThemesScreenState.Loading)
-    val screenState: LiveData<ThemesScreenState> = _screenState
+    BaseViewModel<ThemesScreenState>(ThemesScreenState.Loading) {
 
     init {
-        viewModelScope.launch {
-            _screenState.postValue(ThemesScreenState.Content(themesInteractor.getListThemes()))
+        viewModelScope.launch(Dispatchers.IO) {
+            val themes = themesInteractor.getListThemes()
+
+            withContext(Dispatchers.Main) {
+                updateScreenState(ThemesScreenState.Content(themes))
+            }
         }
     }
 }

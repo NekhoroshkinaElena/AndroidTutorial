@@ -10,7 +10,7 @@ class MaterialStudyRepositoryImpl @Inject constructor(private val db: TutorialDb
 
     override suspend fun getQuestions(subThemeId: Int): List<Question> {
         return db.getQuestions().getQuestions(subThemeId).map {
-            Question(it.question, it.answer)
+            Question(it.question)
         }
     }
 }
