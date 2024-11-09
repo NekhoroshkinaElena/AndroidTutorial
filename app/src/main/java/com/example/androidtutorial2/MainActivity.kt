@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
 
-        binding.bottomNavigationView.selectedItemId = R.id.studyFragment
-
         val showBottomNavigation =
             featureToggleManager.isEnabled(FeatureToggle.BOTTOM_NAVIGATION_BAR)
         binding.bottomNavigationView.isVisible = showBottomNavigation
@@ -39,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         if (showBottomNavigation) {
+            navController.navigate(R.id.homeFragment)
             navController.addOnDestinationChangedListener { _, navDestination, _ ->
                 binding.bottomNavigationView.isVisible =
                     fragmentsWithBottomNav.contains(navDestination.id)
