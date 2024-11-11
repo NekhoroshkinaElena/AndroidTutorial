@@ -1,6 +1,7 @@
 package com.example.androidtutorial2.di
 
 import android.content.Context
+import com.example.androidtutorial2.MainActivity
 import com.example.androidtutorial2.home.ui.HomeFragment
 import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.repeat.ui.RepeatFragment
@@ -13,8 +14,10 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RepositoryModule::class, InteractorModule::class, DataModule::class])
+@Component(modules = [RepositoryModule::class, InteractorModule::class, DataModule::class, AppModule::class])
 interface AppComponent {
+
+    fun inject(activity: MainActivity)
 
     fun inject(themesFragment: ThemesFragment)
 
