@@ -12,7 +12,7 @@ import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyBinding
 import com.example.androidtutorial2.material_study.ui.adapter.QuestionAdapter
-import com.example.androidtutorial2.sub_themes.domain.SubTheme
+import com.example.androidtutorial2.sub_themes.domain.model.SubTheme
 import com.example.androidtutorial2.utils.TagHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -46,7 +46,7 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
         val subTheme: SubTheme? = requireArguments().getParcelable(MATERIAL_TO_STUDY)
         binding.tvThemeDescription.text =
             Html.fromHtml(
-                "<z>mkjkjhkjh, <p><z>njhkjhkjhkjh",
+                subTheme?.materialStudy ?: "",
                 null,
                 TagHandler()
             )

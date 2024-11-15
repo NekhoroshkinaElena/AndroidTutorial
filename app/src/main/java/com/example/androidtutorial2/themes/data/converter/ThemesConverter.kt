@@ -10,10 +10,12 @@ fun themeEntityToTheme(
     repeatedSubThemes: Int
 ): Theme {
     return Theme(
-        themeEntity.id,
-        themeEntity.name,
-        themeEntity.blocked != 0,
-        subThemesCount,
-        repeatedSubThemes
+        id = themeEntity.id,
+        name = themeEntity.name,
+        blocked = themeEntity.blocked != 0,
+        subThemesCount = subThemesCount,
+        repeatedSubThemes = repeatedSubThemes,
+        isThemeInStudy = false,
+        isThemeCompleted = false
     )
 }

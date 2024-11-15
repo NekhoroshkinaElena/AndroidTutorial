@@ -3,7 +3,6 @@ package com.example.androidtutorial2.repeat.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -13,7 +12,7 @@ import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentRepeatBinding
 import com.example.androidtutorial2.repeat.ui.adapter.RepeatThemesAdapter
-import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
+import com.example.androidtutorial2.sub_themes_repeat.ui.SubThemesRepeatFragment
 
 class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
     FragmentRepeatBinding::inflate
@@ -22,8 +21,8 @@ class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
     private val themeAdapter = RepeatThemesAdapter { theme ->
         if (!theme.blocked) {
             findNavController().navigate(
-                R.id.action_studyFragment_to_subThemesFragment,
-                SubThemesFragment.createArgs(theme.id, theme.name)
+                R.id.action_studyFragment_to_subThemesRepeatFragment,
+                SubThemesRepeatFragment.createArgs(theme.id, theme.name)
             )
         } else {
             Toast.makeText(
@@ -69,7 +68,6 @@ class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
         binding.pbProgressBar.isVisible = false
         binding.rvRepeatThemeList.isVisible = true
         binding.tvErrorMessage.isVisible = false
-        Log.i("TAG2", "showContent: ${screenState.listThemes}")
         themeAdapter.themes.clear()
         themeAdapter.themes.addAll(screenState.listThemes)
         themeAdapter.notifyDataSetChanged()
@@ -85,6 +83,11 @@ class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
         binding.pbProgressBar.isVisible = false
         binding.rvRepeatThemeList.isVisible = false
         binding.tvErrorMessage.isVisible = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadThemes()
     }
 
     companion object {
