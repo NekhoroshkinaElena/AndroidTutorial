@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/option_repeat"
+        android:title="Повторять" />
+    <item
+        android:id="@+id/option_repeat_later"
+        android:title="Отложить повторение" />
+
+    <item
+        android:id="@+id/option_reset_progress"
+        android:title="Сбросить прогресс" />
+</menu>

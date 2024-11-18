@@ -1,6 +1,6 @@
 package com.example.androidtutorial2.sub_themes.ui
 
-import com.example.androidtutorial2.sub_themes.domain.SubTheme
+import com.example.androidtutorial2.sub_themes.domain.model.SubTheme
 
 sealed class SubThemesScreenState {
     data object Loading : SubThemesScreenState()

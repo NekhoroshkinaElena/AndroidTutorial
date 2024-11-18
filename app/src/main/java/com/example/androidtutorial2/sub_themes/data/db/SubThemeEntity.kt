@@ -23,5 +23,9 @@ data class SubThemeEntity(
     @ColumnInfo(name = "material_of_study")
     val materialStudy: String,
     @ColumnInfo(name = "theme_id")
-    val themeId: Int
+    val themeId: Int,
+    @ColumnInfo(name = "number_repetitions")
+    val numberRepetitions: Int?,
+    @ColumnInfo(name = "is_selected")
+    val isSelected: Int
 )

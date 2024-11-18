@@ -9,7 +9,7 @@
         android:id="@+id/themesFragment"
         android:name="com.example.androidtutorial2.themes.ui.ThemesFragment"
         android:label="fragment_themes"
-        tools:layout="@layout/fragment_themes"/>
+        tools:layout="@layout/fragment_themes" />
     <fragment
         android:id="@+id/materialStudyFragment"
         android:name="com.example.androidtutorial2.material_study.ui.MaterialStudyFragment"
@@ -52,10 +52,25 @@
         <action
             android:id="@+id/action_studyFragment_to_repeatFragment"
             app:destination="@id/repeatFragment" />
+        <action
+            android:id="@+id/action_studyFragment_to_subThemesRepeatFragment"
+            app:destination="@id/subThemesRepeatFragment" />
     </fragment>
     <fragment
         android:id="@+id/repeatFragment"
         android:name="com.example.androidtutorial2.repeat.ui.RepeatFragment"
         android:label="fragment_repeat"
         tools:layout="@layout/fragment_repeat" />
+    <fragment
+        android:id="@+id/subThemesRepeatFragment"
+        android:name="com.example.androidtutorial2.sub_themes_repeat.ui.SubThemesRepeatFragment"
+        android:label="SubThemesRepeatFragment">
+        <action
+            android:id="@+id/action_subThemesRepeatFragment_to_materialStudyRepeatFragment"
+            app:destination="@id/materialStudyRepeatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/materialStudyRepeatFragment"
+        android:name="com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment"
+        android:label="MaterialStudyRepeatFragment" />
 </navigation>

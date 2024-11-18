@@ -28,5 +28,17 @@ class RepeatThemesViewHolder(
         }
         binding.tvThemeName.text = theme.name
         binding.countSubThemes.text = theme.subThemesCount.toString()
+
+        if (theme.isThemeInStudy) {
+            binding.cvThemeName.setCardBackgroundColor(parentView.context.getColor(R.color.light_yellow))
+        }
+
+        if (theme.isThemeCompleted) {
+            binding.cvThemeName.setCardBackgroundColor(parentView.context.getColor(R.color.light_green))
+        }
+
+        if (!theme.isThemeInStudy && !theme.isThemeCompleted) {
+            binding.cvThemeName.setCardBackgroundColor(parentView.context.getColor(R.color.white))
+        }
     }
 }

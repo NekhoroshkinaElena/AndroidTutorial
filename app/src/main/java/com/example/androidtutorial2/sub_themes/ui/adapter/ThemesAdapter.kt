@@ -2,8 +2,7 @@ package com.example.androidtutorial2.sub_themes.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidtutorial2.sub_themes.domain.SubTheme
-import com.example.androidtutorial2.themes.domain.model.Theme
+import com.example.androidtutorial2.sub_themes.domain.model.SubTheme
 
 class SubThemesAdapter(val onClick: (SubTheme) -> Unit) :
     RecyclerView.Adapter<SubThemesViewHolder>() {

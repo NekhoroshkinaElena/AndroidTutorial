@@ -12,9 +12,12 @@ class RepeatViewModel @Inject constructor(private val themesInteractor: ThemesIn
     BaseViewModel<RepeatScreenState>(RepeatScreenState.Loading) {
 
     init {
+        loadThemes()
+    }
+
+    fun loadThemes() {
         viewModelScope.launch(Dispatchers.IO) {
             val themes = themesInteractor.getListThemes()
-
             withContext(Dispatchers.Main) {
                 updateScreenState(RepeatScreenState.Content(themes))
             }

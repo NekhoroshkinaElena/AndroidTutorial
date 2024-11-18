@@ -9,5 +9,7 @@ data class Theme(
     val name: String,
     val blocked: Boolean,
     val subThemesCount: Int,
-    val repeatedSubThemes: Int
+    val repeatedSubThemes: Int,
+    val isThemeInStudy: Boolean,
+    val isThemeCompleted: Boolean
 ) : Parcelable
