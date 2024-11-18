@@ -6,25 +6,37 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentSubThemesBinding
 import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment
+import com.example.androidtutorial2.sub_themes.domain.model.SubTheme
 import com.example.androidtutorial2.sub_themes_repeat.ui.adapter.SubThemesRepeatAdapter
+import com.example.androidtutorial2.utils.debounce
 
 class SubThemesRepeatFragment : BaseFragment<FragmentSubThemesBinding, SubThemesRepeatViewModel>(
     FragmentSubThemesBinding::inflate
 ) {
 
+    private var isClickAllowed = true
+    private lateinit var onSubThemeClickDebounce: (SubTheme) -> Unit
+
     private val subThemeAdapter = SubThemesRepeatAdapter(
+
         onClick = { subTheme ->
-            findNavController().navigate(
-                R.id.action_subThemesRepeatFragment_to_materialStudyRepeatFragment,
-                MaterialStudyRepeatFragment.createArguments(subTheme.id)
-            )
+            if (isClickAllowed) {
+                isClickAllowed = false
+                findNavController().navigate(
+                    R.id.action_subThemesRepeatFragment_to_materialStudyRepeatFragment,
+                    MaterialStudyRepeatFragment.createArguments(subTheme.id)
+                )
+                onSubThemeClickDebounce(subTheme)
+            }
         },
+
         onMenuItemClick = { subTheme, itemId ->
             when (itemId) {
                 R.id.option_repeat -> {
@@ -52,6 +64,13 @@ class SubThemesRepeatFragment : BaseFragment<FragmentSubThemesBinding, SubThemes
 
         val themeId: Int = requireArguments().getInt(THEME_ID)
         viewModel.getSubThemes(themeId)
+
+        onSubThemeClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY,
+            requireActivity().lifecycleScope, false
+        ) {
+            isClickAllowed = true
+        }
 
         initializeObservers()
         initializeAdapter()
@@ -104,6 +123,7 @@ class SubThemesRepeatFragment : BaseFragment<FragmentSubThemesBinding, SubThemes
     companion object {
         private const val THEME_ID = "theme_id"
         private const val THEME_NAME = "theme_name"
+        private const val CLICK_DEBOUNCE_DELAY = 1_000L
 
         fun createArgs(themeId: Int, themeName: String): Bundle {
             return bundleOf(THEME_ID to themeId, THEME_NAME to themeName)
