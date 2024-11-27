@@ -26,4 +26,22 @@
     <string name="examples">Примеры</string>
     <string name="theme_lock">Данные темы будут доступны позже</string>
     <string name="repetition_format">%1$d/7</string>
+    <string name="html_template">
+        <![CDATA[
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Учебный материал</title>
+            <style>
+                %1$s
+            </style>
+        </head>
+        <body>
+            %2$s
+        </body>
+        </html>
+        ]]>
+    </string>
 </resources>

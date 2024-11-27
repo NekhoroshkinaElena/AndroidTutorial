@@ -6,7 +6,7 @@ interface SubThemesInteractor {
 
     suspend fun getAllSubThemes(): List<SubTheme>
 
-    suspend fun getSubThemeById(subThemeId: Int): SubTheme?
+    suspend fun  getSubThemeById(subThemeId: Int): SubTheme?
 
     suspend fun getSubThemes(themeId: Int): List<SubTheme>
 
