@@ -69,7 +69,8 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
                 is QuestionsScreenState.Content -> showContent(screenState = screenState)
-                else -> showLoading()
+                is QuestionsScreenState.Loading -> showLoading()
+                is QuestionsScreenState.Error -> showError(message = screenState.message)
             }
         }
     }
@@ -120,9 +121,10 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
         binding.standardBottomSheet.isVisible = false
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         binding.pbProgressBar.isVisible = false
         binding.svContent.isVisible = false
+        binding.tvErrorMessage.text = message
         binding.tvErrorMessage.isVisible = true
         binding.standardBottomSheet.isVisible = false
     }

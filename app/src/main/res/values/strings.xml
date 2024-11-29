@@ -44,4 +44,10 @@
         </html>
         ]]>
     </string>
+
+    <!-- Errors -->
+    <string name="error_subtheme_not_found">Подтемы не найдены</string>
+    <string name="error_css_load">Ошибка загрузки стилей</string>
+    <string name="error_unknown">Произошла неизвестная ошибка</string>
+    <string name="error">Произошла ошибка</string>
 </resources>

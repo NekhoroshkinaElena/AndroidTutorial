@@ -1,4 +1,4 @@
-package com.example.androidtutorial2.styles
+package com.example.androidtutorial2.resources
 
 interface StyleStringsProvider {
 

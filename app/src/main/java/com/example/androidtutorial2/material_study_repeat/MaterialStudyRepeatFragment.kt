@@ -52,7 +52,7 @@ class MaterialStudyRepeatFragment :
             when (screenState) {
                 is MaterialStudyRepeatScreenState.Content -> showContent(screenState)
                 is MaterialStudyRepeatScreenState.Loading -> showLoading()
-                is MaterialStudyRepeatScreenState.Error -> showError()
+                is MaterialStudyRepeatScreenState.Error -> showError(screenState.message)
             }
         }
     }
@@ -86,9 +86,10 @@ class MaterialStudyRepeatFragment :
         binding.tvErrorMessage.isVisible = false
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         binding.pbProgressBar.isVisible = false
         binding.svContent.isVisible = false
+        binding.tvErrorMessage.text = message
         binding.tvErrorMessage.isVisible = true
     }
 

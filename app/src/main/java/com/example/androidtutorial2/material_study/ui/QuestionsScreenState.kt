@@ -11,5 +11,5 @@ sealed class QuestionsScreenState {
     ) : QuestionsScreenState()
 
     data object Loading : QuestionsScreenState()
-    data object Error : QuestionsScreenState()
+    data class Error(val message: String) : QuestionsScreenState()
 }

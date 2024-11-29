@@ -21,7 +21,7 @@ import javax.inject.Singleton
         InteractorModule::class,
         DataModule::class,
         AppModule::class,
-        StyleModule::class]
+        ResourcesModule::class]
 )
 interface AppComponent {
 
