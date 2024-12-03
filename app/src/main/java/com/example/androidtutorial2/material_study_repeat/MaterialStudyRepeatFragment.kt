@@ -2,15 +2,14 @@ package com.example.androidtutorial2.material_study_repeat
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyRepeatBinding
-import com.example.androidtutorial2.utils.TagHandler
 
 class MaterialStudyRepeatFragment :
     BaseFragment<FragmentMaterialStudyRepeatBinding, MaterialStudyRepeatViewModel>(
@@ -53,7 +52,7 @@ class MaterialStudyRepeatFragment :
             when (screenState) {
                 is MaterialStudyRepeatScreenState.Content -> showContent(screenState)
                 is MaterialStudyRepeatScreenState.Loading -> showLoading()
-                is MaterialStudyRepeatScreenState.Error -> showError()
+                is MaterialStudyRepeatScreenState.Error -> showError(screenState.message)
             }
         }
     }
@@ -64,12 +63,21 @@ class MaterialStudyRepeatFragment :
         binding.tvErrorMessage.isVisible = false
 
         binding.toolbar.title = screenState.subTheme.name
-        binding.tvThemeDescription.text =
-            Html.fromHtml(
-                screenState.subTheme.materialStudy,
-                null,
-                TagHandler()
-            )
+
+
+        val htmlContent = screenState.subTheme.materialStudy
+
+        val cssStyle = screenState.cssStyle
+
+        val styledHtmlContent = getString(R.string.html_template, cssStyle, htmlContent)
+
+        binding.webViewContent.loadDataWithBaseURL(
+            null,
+            styledHtmlContent,
+            "text/html",
+            "UTF-8",
+            null
+        )
     }
 
     private fun showLoading() {
@@ -78,9 +86,10 @@ class MaterialStudyRepeatFragment :
         binding.tvErrorMessage.isVisible = false
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         binding.pbProgressBar.isVisible = false
         binding.svContent.isVisible = false
+        binding.tvErrorMessage.text = message
         binding.tvErrorMessage.isVisible = true
     }
 

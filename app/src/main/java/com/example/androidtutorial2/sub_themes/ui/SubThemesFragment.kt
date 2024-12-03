@@ -21,7 +21,7 @@ class SubThemesFragment : BaseFragment<FragmentSubThemesBinding, SubThemesViewMo
     private val subThemeAdapter = SubThemesAdapter { subThemes ->
         findNavController().navigate(
             R.id.action_subThemesFragment_to_materialStudyFragment,
-            MaterialStudyFragment.createArguments(subThemes)
+            MaterialStudyFragment.createArguments(subThemes.id)
         )
     }
 

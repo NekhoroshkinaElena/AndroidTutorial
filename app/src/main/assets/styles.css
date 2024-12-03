@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('file:///android_asset/fonts/montserrat_regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('file:///android_asset/fonts/montserrat-bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Courier New';
+    src: url('file:///android_asset/fonts/cour.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Courier New Italic';
+    src: url('file:///android_asset/fonts/couri.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    font-size: 18px;
+    margin: 16px;
+    background-color: #F9F9F9;
+}
+
+h1, h2, h3 {
+    color: #333;
+    font-size: 22px;
+    font-family: 'Montserrat Bold', sans-serif;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+code {
+    background-color: #f1f1f1;
+    padding: 3px 5px;
+    font-family: 'Courier New', sans-serif;
+}
+
+pre {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+ul, ol {
+    padding-left: 20px;
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+        margin: 8px;
+    }
+
+    h1, h2, h3 {
+        font-size: 18px;
+    }
+
+    ul, ol {
+        padding-left: 15px;
+    }
+
+    i {
+        font-family: 'Courier New Italic', sans-serif;
+        font-size: 14px;
+        color: #808080;
+    }
+}
