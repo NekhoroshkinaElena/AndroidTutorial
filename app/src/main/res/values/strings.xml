@@ -24,7 +24,7 @@
     <string name="recommendations">Советы</string>
     <string name="stats">Статистика</string>
     <string name="examples">Примеры</string>
-    <string name="theme_lock">Данные темы будут доступны позже</string>
+    <string name="topic_lock">Данные темы будут доступны позже</string>
     <string name="repetition_format">%1$d/7</string>
     <string name="html_template">
         <![CDATA[
@@ -46,7 +46,7 @@
     </string>
 
     <!-- Errors -->
-    <string name="error_subtheme_not_found">Подтемы не найдены</string>
+    <string name="error_sub_topic_not_found">Подтемы не найдены</string>
     <string name="error_css_load">Ошибка загрузки стилей</string>
     <string name="error_unknown">Произошла неизвестная ошибка</string>
     <string name="error">Произошла ошибка</string>

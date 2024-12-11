@@ -11,23 +11,23 @@ import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentRepeatBinding
-import com.example.androidtutorial2.repeat.ui.adapter.RepeatThemesAdapter
-import com.example.androidtutorial2.sub_themes_repeat.ui.SubThemesRepeatFragment
+import com.example.androidtutorial2.repeat.ui.adapter.RepeatTopicsAdapter
+import com.example.androidtutorial2.sub_topics_repeat.ui.SubTopicsRepeatFragment
 
 class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
     FragmentRepeatBinding::inflate
 ) {
 
-    private val themeAdapter = RepeatThemesAdapter { theme ->
-        if (!theme.blocked) {
+    private val topicAdapter = RepeatTopicsAdapter { topic ->
+        if (!topic.blocked) {
             findNavController().navigate(
-                R.id.action_studyFragment_to_subThemesRepeatFragment,
-                SubThemesRepeatFragment.createArgs(theme.id, theme.name)
+                R.id.action_studyFragment_to_subTopicsRepeatFragment,
+                SubTopicsRepeatFragment.createArgs(topic.id, topic.name)
             )
         } else {
             Toast.makeText(
                 requireActivity(),
-                getString(R.string.theme_lock),
+                getString(R.string.topic_lock),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -59,35 +59,35 @@ class RepeatFragment : BaseFragment<FragmentRepeatBinding, RepeatViewModel>(
     }
 
     private fun initializeAdapter() {
-        binding.rvRepeatThemeList.adapter = themeAdapter
+        binding.rvRepeatTopicsList.adapter = topicAdapter
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showContent(screenState: RepeatScreenState.Content) {
         binding.pbProgressBar.isVisible = false
-        binding.rvRepeatThemeList.isVisible = true
+        binding.rvRepeatTopicsList.isVisible = true
         binding.tvErrorMessage.isVisible = false
-        themeAdapter.themes.clear()
-        themeAdapter.themes.addAll(screenState.listThemes)
-        themeAdapter.notifyDataSetChanged()
+        topicAdapter.topics.clear()
+        topicAdapter.topics.addAll(screenState.listTopics)
+        topicAdapter.notifyDataSetChanged()
     }
 
     private fun showLoading() {
         binding.pbProgressBar.isVisible = true
-        binding.rvRepeatThemeList.isVisible = false
+        binding.rvRepeatTopicsList.isVisible = false
         binding.tvErrorMessage.isVisible = false
     }
 
     private fun showError() {
         binding.pbProgressBar.isVisible = false
-        binding.rvRepeatThemeList.isVisible = false
+        binding.rvRepeatTopicsList.isVisible = false
         binding.tvErrorMessage.isVisible = true
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadThemes()
+        viewModel.loadTopics()
     }
 
     companion object {

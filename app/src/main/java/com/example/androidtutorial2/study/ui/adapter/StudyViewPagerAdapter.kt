@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.androidtutorial2.repeat.ui.RepeatFragment
-import com.example.androidtutorial2.themes.ui.ThemesFragment
+import com.example.androidtutorial2.topic.ui.TopicsFragment
 
 class StudyViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -16,7 +16,7 @@ class StudyViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> ThemesFragment.newInstance()
+            0 -> TopicsFragment.newInstance()
             else -> RepeatFragment.newInstance()
         }
     }

@@ -38,9 +38,9 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
         initializeObservers()
         initializeAdapter()
 
-        val subThemeId: Int = requireArguments().getInt(MATERIAL_TO_STUDY_ID)
+        val subTopicId: Int = requireArguments().getInt(MATERIAL_TO_STUDY_ID)
 
-        viewModel.showMaterialStudy(subThemeId)
+        viewModel.showMaterialStudy(subTopicId)
     }
 
     private fun initializeListeners() {
@@ -93,7 +93,7 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
         binding.svContent.isVisible = true
         binding.standardBottomSheet.isVisible = true
 
-        val htmlContent = screenState.subTheme.materialStudy
+        val htmlContent = screenState.subTopic.materialStudy
 
         val cssStyle = screenState.cssStyle
 
@@ -107,7 +107,7 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
             null
         )
 
-        binding.toolbar.title = screenState.subTheme.name
+        binding.toolbar.title = screenState.subTopic.name
 
         questionsAdapter.questions.clear()
         questionsAdapter.questions.addAll(screenState.listQuestions)
@@ -131,7 +131,7 @@ class MaterialStudyFragment : BaseFragment<FragmentMaterialStudyBinding, Materia
 
     companion object {
         private const val MATERIAL_TO_STUDY_ID = "material_to_study_id"
-        fun createArguments(subThemeId: Int): Bundle =
-            bundleOf(MATERIAL_TO_STUDY_ID to subThemeId)
+        fun createArguments(subTopicId: Int): Bundle =
+            bundleOf(MATERIAL_TO_STUDY_ID to subTopicId)
     }
 }

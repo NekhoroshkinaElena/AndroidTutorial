@@ -7,7 +7,7 @@ import com.example.androidtutorial2.material_study.domain.MaterialStudyInteracto
 import com.example.androidtutorial2.resources.CssLoadException
 import com.example.androidtutorial2.resources.StringProvider
 import com.example.androidtutorial2.resources.StyleStringsProvider
-import com.example.androidtutorial2.sub_themes.domain.SubThemesInteractor
+import com.example.androidtutorial2.sub_topics.domain.SubTopicsInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,28 +15,28 @@ import javax.inject.Inject
 class MaterialStudyViewModel @Inject constructor(
     private val materialStudyInteractor: MaterialStudyInteractor,
     private val styleStringsProvider: StyleStringsProvider,
-    private val subThemesInteractor: SubThemesInteractor,
+    private val subTopicsInteractor: SubTopicsInteractor,
     private val stringProvider: StringProvider
 ) : BaseViewModel<QuestionsScreenState>(QuestionsScreenState.Loading) {
 
-    fun showMaterialStudy(subThemeId: Int) {
+    fun showMaterialStudy(subTopicId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val subTheme = subThemesInteractor.getSubThemeById(subThemeId)
-                if (subTheme != null) {
-                    val questions = materialStudyInteractor.getQuestions(subThemeId)
+                val subTopic = subTopicsInteractor.getSubTopicById(subTopicId)
+                if (subTopic != null) {
+                    val questions = materialStudyInteractor.getQuestions(subTopicId)
                     val css = styleStringsProvider.loadStyleCss()
                     updateScreenState(
                         QuestionsScreenState.Content(
                             listQuestions = questions,
                             cssStyle = css,
-                            subTheme = subTheme
+                            subTopic = subTopic
                         )
                     )
                 } else {
                     updateScreenState(
                         QuestionsScreenState.Error(
-                            stringProvider.getString(R.string.error_subtheme_not_found)
+                            stringProvider.getString(R.string.error_sub_topic_not_found)
                         )
                     )
                 }

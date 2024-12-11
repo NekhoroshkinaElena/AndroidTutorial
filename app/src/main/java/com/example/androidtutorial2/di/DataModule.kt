@@ -2,7 +2,7 @@ package com.example.androidtutorial2.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidtutorial2.themes.data.db.TutorialDb
+import com.example.androidtutorial2.topic.data.db.TutorialDb
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

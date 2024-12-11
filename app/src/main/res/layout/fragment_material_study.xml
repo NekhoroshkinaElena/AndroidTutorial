@@ -51,6 +51,7 @@
                     android:layout_marginVertical="32dp"
                     android:background="@drawable/button_round"
                     android:backgroundTint="@color/yellow"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:text="@string/questions_for_self_control"
                     android:textAllCaps="false"
                     android:visibility="visible"
