@@ -8,9 +8,9 @@ import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFra
 import com.example.androidtutorial2.repeat.ui.RepeatFragment
 import com.example.androidtutorial2.settings.SettingsFragment
 import com.example.androidtutorial2.study.ui.StudyFragment
-import com.example.androidtutorial2.sub_themes.ui.SubThemesFragment
-import com.example.androidtutorial2.sub_themes_repeat.ui.SubThemesRepeatFragment
-import com.example.androidtutorial2.themes.ui.ThemesFragment
+import com.example.androidtutorial2.sub_topics.ui.SubTopicsFragment
+import com.example.androidtutorial2.sub_topics_repeat.ui.SubTopicsRepeatFragment
+import com.example.androidtutorial2.topic.ui.TopicsFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -27,11 +27,11 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
 
-    fun inject(themesFragment: ThemesFragment)
+    fun inject(topicsFragment: TopicsFragment)
 
-    fun inject(subThemesFragment: SubThemesFragment)
+    fun inject(subTopicsFragment: SubTopicsFragment)
 
-    fun inject(subThemesRepeatFragment: SubThemesRepeatFragment)
+    fun inject(subTopicsRepeatFragment: SubTopicsRepeatFragment)
 
     fun inject(materialStudyFragment: MaterialStudyFragment)
 

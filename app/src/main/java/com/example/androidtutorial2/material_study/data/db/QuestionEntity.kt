@@ -4,12 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.androidtutorial2.sub_themes.data.db.SubThemeEntity
+import com.example.androidtutorial2.sub_topics.data.db.SubTopicEntity
 
 @Entity(
     tableName = "self_test_questions",
     foreignKeys = [ForeignKey(
-        entity = SubThemeEntity::class,
+        entity = SubTopicEntity::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("sub_theme_id")
     )]
@@ -23,5 +23,5 @@ data class QuestionEntity(
     @ColumnInfo(name = "answer")
     val answer: String,
     @ColumnInfo(name = "sub_theme_id")
-    val subThemeId: Int
+    val subTopicId: Int
 )

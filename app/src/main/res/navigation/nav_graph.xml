@@ -6,22 +6,22 @@
     app:startDestination="@id/studyFragment">
 
     <fragment
-        android:id="@+id/themesFragment"
-        android:name="com.example.androidtutorial2.themes.ui.ThemesFragment"
-        android:label="fragment_themes"
-        tools:layout="@layout/fragment_themes" />
+        android:id="@+id/topicsFragment"
+        android:name="com.example.androidtutorial2.topic.ui.TopicsFragment"
+        android:label="fragment_topics"
+        tools:layout="@layout/fragment_topics" />
     <fragment
         android:id="@+id/materialStudyFragment"
         android:name="com.example.androidtutorial2.material_study.ui.MaterialStudyFragment"
         android:label="fragment_material_study"
         tools:layout="@layout/fragment_material_study" />
     <fragment
-        android:id="@+id/subThemesFragment"
-        android:name="com.example.androidtutorial2.sub_themes.ui.SubThemesFragment"
-        android:label="fragment_sub_themes"
-        tools:layout="@layout/fragment_sub_themes">
+        android:id="@+id/subTopicsFragment"
+        android:name="com.example.androidtutorial2.sub_topics.ui.SubTopicsFragment"
+        android:label="fragment_sub_topis"
+        tools:layout="@layout/fragment_sub_topics">
         <action
-            android:id="@+id/action_subThemesFragment_to_materialStudyFragment"
+            android:id="@+id/action_subTopicsFragment_to_materialStudyFragment"
             app:destination="@id/materialStudyFragment" />
     </fragment>
     <fragment
@@ -44,17 +44,17 @@
         android:label="fragment_study"
         tools:layout="@layout/fragment_study">
         <action
-            android:id="@+id/action_studyFragment_to_themesFragment"
-            app:destination="@id/themesFragment" />
+            android:id="@+id/action_studyFragment_to_topicsFragment"
+            app:destination="@id/topicsFragment" />
         <action
-            android:id="@+id/action_studyFragment_to_subThemesFragment"
-            app:destination="@id/subThemesFragment" />
+            android:id="@+id/action_studyFragment_to_subTopicsFragment"
+            app:destination="@id/subTopicsFragment" />
         <action
             android:id="@+id/action_studyFragment_to_repeatFragment"
             app:destination="@id/repeatFragment" />
         <action
-            android:id="@+id/action_studyFragment_to_subThemesRepeatFragment"
-            app:destination="@id/subThemesRepeatFragment" />
+            android:id="@+id/action_studyFragment_to_subTopicsRepeatFragment"
+            app:destination="@id/subTopicsRepeatFragment" />
     </fragment>
     <fragment
         android:id="@+id/repeatFragment"
@@ -62,11 +62,11 @@
         android:label="fragment_repeat"
         tools:layout="@layout/fragment_repeat" />
     <fragment
-        android:id="@+id/subThemesRepeatFragment"
-        android:name="com.example.androidtutorial2.sub_themes_repeat.ui.SubThemesRepeatFragment"
-        android:label="SubThemesRepeatFragment">
+        android:id="@+id/subTopicsRepeatFragment"
+        android:name="com.example.androidtutorial2.sub_topics_repeat.ui.SubTopicsRepeatFragment"
+        android:label="SubTopicsRepeatFragment">
         <action
-            android:id="@+id/action_subThemesRepeatFragment_to_materialStudyRepeatFragment"
+            android:id="@+id/action_subTopicsRepeatFragment_to_materialStudyRepeatFragment"
             app:destination="@id/materialStudyRepeatFragment" />
     </fragment>
     <fragment

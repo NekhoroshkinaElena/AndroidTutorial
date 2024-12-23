@@ -6,26 +6,26 @@ import com.example.androidtutorial2.base.BaseViewModel
 import com.example.androidtutorial2.resources.CssLoadException
 import com.example.androidtutorial2.resources.StringProvider
 import com.example.androidtutorial2.resources.StyleStringsProvider
-import com.example.androidtutorial2.sub_themes.domain.SubThemesInteractor
+import com.example.androidtutorial2.sub_topics.domain.SubTopicsInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MaterialStudyRepeatViewModel @Inject constructor(
-    private val subThemesInteractor: SubThemesInteractor,
+    private val subTopicsInteractor: SubTopicsInteractor,
     private val styleStringsProvider: StyleStringsProvider,
     private val stringsProvider: StringProvider
 ) : BaseViewModel<MaterialStudyRepeatScreenState>(MaterialStudyRepeatScreenState.Loading) {
 
-    fun showMaterialStudy(subThemeId: Int) {
+    fun showMaterialStudy(subTopicId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val subTheme = subThemesInteractor.getSubThemeById(subThemeId)
-                if (subTheme != null) {
+                val subTopic = subTopicsInteractor.getSubTopicById(subTopicId)
+                if (subTopic != null) {
                     val css = styleStringsProvider.loadStyleCss()
                     updateScreenState(
                         MaterialStudyRepeatScreenState.Content(
-                            subTheme = subTheme,
+                            subTopic = subTopic,
                             cssStyle = css
                         )
                     )
@@ -33,7 +33,7 @@ class MaterialStudyRepeatViewModel @Inject constructor(
                     updateScreenState(
                         MaterialStudyRepeatScreenState.Error(
                             stringsProvider.getString(
-                                R.string.error_subtheme_not_found
+                                R.string.error_sub_topic_not_found
                             )
                         )
                     )
@@ -58,13 +58,13 @@ class MaterialStudyRepeatViewModel @Inject constructor(
         }
     }
 
-    fun updateNumberRepetitions(subThemeId: Int) {
+    fun updateNumberRepetitions(subTopicId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val subTheme = subThemesInteractor.getSubThemeById(subThemeId)
-            if (subTheme != null) {
-                subThemesInteractor.updateNumberRepetitions(
-                    subTheme.id,
-                    subTheme.numberRepetitions + 1
+            val subTopic = subTopicsInteractor.getSubTopicById(subTopicId)
+            if (subTopic != null) {
+                subTopicsInteractor.updateNumberRepetitions(
+                    subTopic.id,
+                    subTopic.numberRepetitions + 1
                 )
             } else {
                 updateScreenState(
