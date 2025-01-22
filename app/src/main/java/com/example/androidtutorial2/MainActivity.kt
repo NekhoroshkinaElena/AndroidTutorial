@@ -1,7 +1,10 @@
 package com.example.androidtutorial2
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import com.example.androidtutorial2.databinding.ActivityMainBinding
@@ -64,5 +67,24 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        checkPermissionsAndScheduleNotifications()
+    }
+
+    private fun checkPermissionsAndScheduleNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
+                )
+                return
+            }
+        }
+    }
+
+    companion object {
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1
     }
 }

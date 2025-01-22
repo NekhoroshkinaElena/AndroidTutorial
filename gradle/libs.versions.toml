@@ -5,7 +5,8 @@ dagger = "2.51.1"
 daggerCompiler = "2.51.1"
 easyflipview = "3.0.3"
 glide = "4.16.0"
-kotlin = "1.9.22"
+kotlin = "2.1.0"
+library = "8.1.1"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -26,6 +27,7 @@ lifecycleViewmodelKtx = "2.8.4"
 fragmentKtx = "1.8.2"
 uiDesktop = "1.6.8"
 preference = "1.2.0"
+navigationRuntimeKtx = "2.8.5"
 
 [libraries]
 #AndroidX
@@ -61,8 +63,10 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "library"}
 

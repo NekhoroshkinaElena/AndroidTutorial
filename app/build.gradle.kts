@@ -42,7 +42,6 @@ android {
     }
 
     kapt {
-        generateStubs = true
         correctErrorTypes = true
     }
 }
@@ -71,10 +70,6 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
-    //glide
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -83,4 +78,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(project(":celebrity:notifications:api"))
+    implementation(project(":celebrity:notifications:impl"))
 }
