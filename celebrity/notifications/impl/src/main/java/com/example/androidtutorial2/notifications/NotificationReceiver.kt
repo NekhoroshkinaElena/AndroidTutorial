@@ -30,7 +30,7 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationComponent.inject(this)
 
         val notificationData: NotificationData =
-            intent?.getParcelableExtra("notification_data")
+            intent?.getParcelableExtra(NOTIFICATION_DATA_KEY)
                 ?: return // Если данные отсутствуют, прерываем выполнение
 
 
@@ -77,7 +77,7 @@ class NotificationReceiver : BroadcastReceiver() {
         //Уменьшаем remaining_times на 1
         val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra(
-                "notification_data",
+                NOTIFICATION_DATA_KEY,
                 notificationData.copy(remainingTimes = remainingTimes - 1) // Уменьшаем счётчик
             )
         }
@@ -122,6 +122,7 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        const val NOTIFICATION_DATA_KEY = "notification_data"
         const val CHANNEL_ID = "notification_channel"
     }
 }
