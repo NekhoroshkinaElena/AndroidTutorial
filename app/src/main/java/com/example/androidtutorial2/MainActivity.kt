@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.androidtutorial2.databinding.ActivityMainBinding
 import com.example.androidtutorial2.feature_toggle.FeatureToggle
 import com.example.androidtutorial2.feature_toggle.FeatureToggleManager
+import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +45,17 @@ class MainActivity : AppCompatActivity() {
             navController.addOnDestinationChangedListener { _, navDestination, _ ->
                 binding.bottomNavigationView.isVisible =
                     fragmentsWithBottomNav.contains(navDestination.id)
+            }
+        }
+
+        val data = intent.data
+        if (data != null) {
+            val subTopicId = data.lastPathSegment?.toIntOrNull()
+            subTopicId?.let {
+                navController.navigate(
+                    R.id.materialStudyRepeatFragment,
+                    MaterialStudyRepeatFragment.createArguments(it)
+                )
             }
         }
 

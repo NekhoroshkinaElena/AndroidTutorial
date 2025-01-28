@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import com.example.androidtutorial2.model.NotificationData
+import com.example.androidtutorial2.notifications.NotificationReceiver.Companion.NOTIFICATION_DATA_KEY
 import javax.inject.Inject
 
 internal class NotificationsManagerImpl @Inject constructor(
@@ -47,7 +48,7 @@ internal class NotificationsManagerImpl @Inject constructor(
         // Создаём Intent для вызова BroadcastReceiver (NotificationReceiver),
         // который будет обрабатывать уведомление
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("notification_data", notificationData)
+            putExtra(NOTIFICATION_DATA_KEY, notificationData)
         }
 
         //Используется для передачи Intent в AlarmManager и гарантирует, что один и тот же будильник
@@ -93,7 +94,7 @@ internal class NotificationsManagerImpl @Inject constructor(
         )
 
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("notification_data", notificationData)
+            putExtra(NOTIFICATION_DATA_KEY, notificationData)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(

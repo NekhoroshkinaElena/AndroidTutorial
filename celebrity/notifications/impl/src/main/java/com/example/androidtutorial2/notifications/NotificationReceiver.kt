@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
@@ -30,9 +31,8 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationComponent.inject(this)
 
         val notificationData: NotificationData =
-            intent?.getParcelableExtra("notification_data")
-                ?: return // Если данные отсутствуют, прерываем выполнение
-
+            intent?.getParcelableExtra(NOTIFICATION_DATA_KEY)
+                ?: return
 
         val (topicId, topicName, message, remainingTimes) = notificationData
 
@@ -52,12 +52,26 @@ class NotificationReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        //Создаем уведомление с помощью NotificationCompat.Builder
+        // Создаём Intent с deeplink
+        val deepLinkIntent = Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId"))
+        deepLinkIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        // Создаем PendingIntent для запуска deeplink при нажатии
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            topicId,
+            deepLinkIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+
+        // Создаем уведомление с помощью NotificationCompat.Builder
         val notification: Notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("Напоминание: $topicName")
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent) // Устанавливаем PendingIntent
             .build()
 
 
@@ -77,30 +91,31 @@ class NotificationReceiver : BroadcastReceiver() {
         //Уменьшаем remaining_times на 1
         val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra(
-                "notification_data",
+                NOTIFICATION_DATA_KEY,
                 notificationData.copy(remainingTimes = remainingTimes - 1) // Уменьшаем счётчик
             )
         }
 
-        val pendingIntent = PendingIntent.getBroadcast(
+        val nextPendingIntent = PendingIntent.getBroadcast(
             context,
             topicId,
             nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
         val triggerTime = SystemClock.elapsedRealtime() + 10 * 1000 // через 10 секунд
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 triggerTime,
-                pendingIntent
+                nextPendingIntent
             )
         } else {
             alarmManager.setExact(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 triggerTime,
-                pendingIntent
+                nextPendingIntent
             )
         }
     }
@@ -123,5 +138,6 @@ class NotificationReceiver : BroadcastReceiver() {
 
     companion object {
         const val CHANNEL_ID = "notification_channel"
+        const val NOTIFICATION_DATA_KEY = "notification_data"
     }
 }
