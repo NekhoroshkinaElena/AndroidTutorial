@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidTutorial2"
 include(":app")
- 
+include(":celebrity:notifications:api")
+include(":celebrity:notifications:impl")
