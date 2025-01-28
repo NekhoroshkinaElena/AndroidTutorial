@@ -1,10 +1,12 @@
 package com.example.androidtutorial2.di
 
+import android.app.AlarmManager
 import android.content.Context
 import com.example.androidtutorial2.MainActivity
 import com.example.androidtutorial2.home.ui.HomeFragment
 import com.example.androidtutorial2.material_study.ui.MaterialStudyFragment
 import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment
+import com.example.androidtutorial2.notifications.NotificationReceiver
 import com.example.androidtutorial2.repeat.ui.RepeatFragment
 import com.example.androidtutorial2.settings.SettingsFragment
 import com.example.androidtutorial2.study.ui.StudyFragment
@@ -22,7 +24,8 @@ import javax.inject.Singleton
         DataModule::class,
         AppModule::class,
         ResourcesModule::class,
-        NotificationModule::class
+        NotificationsModule::class,
+        SystemServicesModule::class
     ]
 )
 interface AppComponent {

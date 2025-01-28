@@ -2,21 +2,27 @@ package com.example.androidtutorial2.notifications
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import com.example.androidtutorial2.model.NotificationData
 import javax.inject.Inject
 
-class NotificationManagerImpl @Inject constructor(
+internal class NotificationsManagerImpl @Inject constructor(
+    private val alarmManager: AlarmManager,
+    private val notificationManager: NotificationManager,
     private val context: Context
-): NotificationManager{
+) : NotificationsManager {
 
     @SuppressLint("InlinedApi")
-    override fun scheduleTopicRepeatNotifications(topicId: Int, topicName: String, message: String) {
-        // Получаем экземпляр AlarmManager для управления будильниками
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    override fun scheduleTopicRepeatNotifications(
+        topicId: Int,
+        topicName: String,
+        message: String
+    ) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Если разрешение на точные будильники не предоставлено, запрашиваем его
@@ -31,12 +37,17 @@ class NotificationManagerImpl @Inject constructor(
 
         val requestCode = topicId
 
-        // Создаём Intent для вызова BroadcastReceiver (NotificationReceiver), который будет обрабатывать уведомление
+        val notificationData = NotificationData(
+            topicId = topicId,
+            topicName = topicName,
+            message = message,
+            remainingTimes = 5 // начальное количество повторений
+        )
+
+        // Создаём Intent для вызова BroadcastReceiver (NotificationReceiver),
+        // который будет обрабатывать уведомление
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("remaining_times", 5)//начальное количество повторений
-            putExtra("topic_id", topicId)
-            putExtra("topic_name", topicName)
-            putExtra("message", message)
+            putExtra("notification_data", notificationData)
         }
 
         //Используется для передачи Intent в AlarmManager и гарантирует, что один и тот же будильник
@@ -73,11 +84,16 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     override fun cancelNotifications(topicId: Int, topicName: String, message: String) {
+
+        val notificationData = NotificationData(
+            topicId = topicId,
+            topicName = topicName,
+            message = message,
+            remainingTimes = 0
+        )
+
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("remaining_times", 0)
-            putExtra("topic_id", topicId)
-            putExtra("topic_name", topicName)
-            putExtra("message", message)
+            putExtra("notification_data", notificationData)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -87,12 +103,9 @@ class NotificationManagerImpl @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
 
         // Отмена активного уведомления
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         notificationManager.cancel(topicId)
     }
 }

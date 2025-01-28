@@ -12,7 +12,7 @@ import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentSubTopicsBinding
 import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment
-import com.example.androidtutorial2.notifications.NotificationManagerImpl
+import com.example.androidtutorial2.notifications.NotificationsManager
 import com.example.androidtutorial2.sub_topics_repeat.ui.adapter.SubTopicRepeatAdapter
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
 ) {
 
     @Inject
-    lateinit var notificationManagerImpl: NotificationManagerImpl
+    lateinit var notificationManager: NotificationsManager
 
     private val subTopicAdapter = SubTopicRepeatAdapter(
         onClick = { subTopic ->
@@ -34,7 +34,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
             when (itemId) {
                 R.id.option_repeat -> {
                     viewModel.updateSelectionState(subTopic.id, true, subTopic.topicId)
-                    notificationManagerImpl.scheduleTopicRepeatNotifications(
+                    notificationManager.scheduleTopicRepeatNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
                         message = "Не забудьте повторить ${subTopic.name}!"
@@ -43,7 +43,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
 
                 R.id.option_repeat_later -> {
                     viewModel.updateSelectionState(subTopic.id, false, subTopic.topicId)
-                    notificationManagerImpl.cancelNotifications(
+                    notificationManager.cancelNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
                         message = "Не забудьте повторить ${subTopic.name}!"
@@ -52,7 +52,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
 
                 R.id.option_reset_progress -> {
                     viewModel.resetProgress(subTopic.id, subTopic.topicId)
-                    notificationManagerImpl.cancelNotifications(
+                    notificationManager.cancelNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
                         message = "Не забудьте повторить ${subTopic.name}!"

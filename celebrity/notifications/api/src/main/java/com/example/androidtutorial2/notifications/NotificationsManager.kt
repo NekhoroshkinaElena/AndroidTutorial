@@ -1,6 +1,6 @@
 package com.example.androidtutorial2.notifications
 
-interface NotificationManager {
+interface NotificationsManager {
 
     fun scheduleTopicRepeatNotifications(topicId: Int, topicName: String, message: String)
 

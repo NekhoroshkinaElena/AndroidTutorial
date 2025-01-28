@@ -12,26 +12,34 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
+import com.example.androidtutorial2.di.DaggerNotificationComponent
+import com.example.androidtutorial2.model.NotificationData
+import javax.inject.Inject
 
 class NotificationReceiver : BroadcastReceiver() {
 
+    @Inject
+    lateinit var alarmManager: AlarmManager
+
+    @Inject
+    lateinit var notificationManager: NotificationManager
+
     override fun onReceive(context: Context, intent: Intent?) {
 
-        val remainingTimes = intent?.getIntExtra("remaining_times", 0) ?: 0
-        val topicId = intent?.getIntExtra("topic_id", -1) ?: -1
-        val topicName = intent?.getStringExtra("topic_name") ?: "Unknown Topic"
-        val message = intent?.getStringExtra("message") ?: "No message"
+        val notificationComponent = DaggerNotificationComponent.factory().create(context)
+        notificationComponent.inject(this)
+
+        val notificationData: NotificationData =
+            intent?.getParcelableExtra("notification_data")
+                ?: return // Если данные отсутствуют, прерываем выполнение
+
+
+        val (topicId, topicName, message, remainingTimes) = notificationData
 
         if (remainingTimes <= 0) {
             cancelPendingIntent(context, topicId)
             return
         }
-
-        //Получаем доступ к системной службе уведомлений (NotificationManager), которая отвечает
-        // за управление уведомлениями.
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
 
         //На Android 8.0 (API 26) и выше требуется создать канал уведомлений (NotificationChannel),
         // чтобы пользователи могли управлять поведением уведомлений.
@@ -65,17 +73,13 @@ class NotificationReceiver : BroadcastReceiver() {
         //Показываем уведомление пользователю
         notificationManager.notify(topicId, notification)
 
-        // Планируем следующее уведомление
-        //Получаем доступ к AlarmManager, чтобы запланировать следующее уведомление.
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
         //Создаем новый Intent для следующего срабатывания BroadcastReceiver.
         //Уменьшаем remaining_times на 1
         val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("remaining_times", remainingTimes - 1)
-            putExtra("topic_id", topicId)
-            putExtra("topic_name", topicName)
-            putExtra("message", message)
+            putExtra(
+                "notification_data",
+                notificationData.copy(remainingTimes = remainingTimes - 1) // Уменьшаем счётчик
+            )
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -110,7 +114,6 @@ class NotificationReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent) // Отмена запланированного будильника
 
         val notificationManager =
