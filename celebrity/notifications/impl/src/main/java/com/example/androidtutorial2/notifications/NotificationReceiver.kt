@@ -1,7 +1,6 @@
 package com.example.androidtutorial2.notifications
 
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -26,24 +25,25 @@ class NotificationReceiver : BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent?) {
+        injectDependencies(context)
+        val notificationData: NotificationData = intent?.getParcelableExtra(NOTIFICATION_DATA_KEY) ?: return
 
-        val notificationComponent = DaggerNotificationComponent.factory().create(context)
-        notificationComponent.inject(this)
-
-        val notificationData: NotificationData =
-            intent?.getParcelableExtra(NOTIFICATION_DATA_KEY)
-
-                ?: return
-
-        val (topicId, topicName, message, remainingTimes) = notificationData
-
-        if (remainingTimes <= 0) {
-            cancelPendingIntent(context, topicId)
+        if (notificationData.remainingTimes <= 0) {
+            cancelNotification(context, notificationData.topicId)
             return
         }
 
-        //На Android 8.0 (API 26) и выше требуется создать канал уведомлений (NotificationChannel),
-        // чтобы пользователи могли управлять поведением уведомлений.
+        createNotificationChannel()
+        showNotification(context, notificationData)
+        scheduleNextNotification(context, notificationData)
+    }
+
+    private fun injectDependencies(context: Context) {
+        val notificationComponent = DaggerNotificationComponent.factory().create(context)
+        notificationComponent.inject(this)
+    }
+
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
@@ -52,59 +52,51 @@ class NotificationReceiver : BroadcastReceiver() {
             )
             notificationManager.createNotificationChannel(channel)
         }
+    }
 
-        // Создаём Intent с deeplink
-        val deepLinkIntent = Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId"))
-        deepLinkIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    private fun showNotification(context: Context, notificationData: NotificationData) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
 
-        // Создаем PendingIntent для запуска deeplink при нажатии
-        val pendingIntent = PendingIntent.getActivity(
+        val pendingIntent = createDeepLinkPendingIntent(context, notificationData.topicId)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle("Напоминание: ${notificationData.topicName}")
+            .setContentText(notificationData.message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        notificationManager.notify(notificationData.topicId, notification)
+    }
+
+    private fun createDeepLinkPendingIntent(context: Context, topicId: Int): PendingIntent {
+        val deepLinkIntent = Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId")).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        return PendingIntent.getActivity(
             context,
             topicId,
             deepLinkIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
 
-
-        // Создаем уведомление с помощью NotificationCompat.Builder
-        val notification: Notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Напоминание: $topicName")
-            .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent) // Устанавливаем PendingIntent
-            .build()
-
-
-        //На Android 13 (API 33) и выше проверяет, предоставлено ли приложению разрешение
-        // на отправку уведомлений.
-        //Если разрешение отсутствует, выполнение метода прекращается.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                return
-            }
-        }
-
-        //Показываем уведомление пользователю
-        notificationManager.notify(topicId, notification)
-
-        //Создаем новый Intent для следующего срабатывания BroadcastReceiver.
-        //Уменьшаем remaining_times на 1
+    private fun scheduleNextNotification(context: Context, notificationData: NotificationData) {
         val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(
-                NOTIFICATION_DATA_KEY,
-                notificationData.copy(remainingTimes = remainingTimes - 1) // Уменьшаем счётчик
-            )
+            putExtra(NOTIFICATION_DATA_KEY, notificationData.copy(remainingTimes = notificationData.remainingTimes - 1))
         }
 
         val nextPendingIntent = PendingIntent.getBroadcast(
             context,
-            topicId,
+            notificationData.topicId,
             nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val triggerTime = SystemClock.elapsedRealtime() + 10 * 1000 // через 10 секунд
+        val triggerTime = SystemClock.elapsedRealtime() + 10 * 1000
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
@@ -121,25 +113,21 @@ class NotificationReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun cancelPendingIntent(context: Context, topicId: Int) {
+    private fun cancelNotification(context: Context, topicId: Int) {
         val intent = Intent(context, NotificationReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            topicId, // Используем topicId как уникальный requestCode
+            topicId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        alarmManager.cancel(pendingIntent) // Отмена запланированного будильника
-
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(topicId) // Отмена активного уведомления
+        alarmManager.cancel(pendingIntent)
+        notificationManager.cancel(topicId)
     }
 
     companion object {
         const val NOTIFICATION_DATA_KEY = "notification_data"
         const val CHANNEL_ID = "notification_channel"
-        const val NOTIFICATION_DATA_KEY = "notification_data"
     }
 }
