@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.example.androidtutorial2.databinding.ActivityMainBinding
 import com.example.androidtutorial2.feature_toggle.FeatureToggle
 import com.example.androidtutorial2.feature_toggle.FeatureToggleManager
@@ -51,10 +52,15 @@ class MainActivity : AppCompatActivity() {
         val data = intent.data
         if (data != null) {
             val subTopicId = data.lastPathSegment?.toIntOrNull()
-            subTopicId?.let {
+            if (subTopicId != null) {
                 navController.navigate(
                     R.id.materialStudyRepeatFragment,
-                    MaterialStudyRepeatFragment.createArguments(it)
+                    MaterialStudyRepeatFragment.createArguments(subTopicId),
+                    navOptions {
+                        popUpTo(R.id.materialStudyRepeatFragment) {
+                            inclusive = true
+                        }
+                    }
                 )
             }
         }
