@@ -32,6 +32,7 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val notificationData: NotificationData =
             intent?.getParcelableExtra(NOTIFICATION_DATA_KEY)
+
                 ?: return
 
         val (topicId, topicName, message, remainingTimes) = notificationData
@@ -137,6 +138,7 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        const val NOTIFICATION_DATA_KEY = "notification_data"
         const val CHANNEL_ID = "notification_channel"
         const val NOTIFICATION_DATA_KEY = "notification_data"
     }
