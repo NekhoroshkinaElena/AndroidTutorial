@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import com.example.androidtutorial2.di.DaggerNotificationComponent
 import com.example.androidtutorial2.model.NotificationData
@@ -26,12 +25,9 @@ class NotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         injectDependencies(context)
-        val notificationData: NotificationData = intent?.getParcelableExtra(NOTIFICATION_DATA_KEY) ?: return
 
-        if (notificationData.remainingTimes <= 0) {
-            cancelNotification(context, notificationData.topicId)
-            return
-        }
+        val notificationData: NotificationData =
+            intent?.getParcelableExtra(NOTIFICATION_DATA_KEY) ?: return
 
         if (notificationData.currentRepetition >= 6) {
             cancelNotification(context, notificationData.topicId)
@@ -39,7 +35,10 @@ class NotificationReceiver : BroadcastReceiver() {
         }
 
         createNotificationChannel()
-        showNotification(context, notificationData)
+
+        if (hasNotificationPermission(context)) {
+            showNotification(context, notificationData)
+        }
     }
 
     private fun injectDependencies(context: Context) {
@@ -59,12 +58,6 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     private fun showNotification(context: Context, notificationData: NotificationData) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-
         val pendingIntent = createDeepLinkPendingIntent(context, notificationData.topicId)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
@@ -78,6 +71,11 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationManager.notify(notificationData.topicId, notification)
     }
 
+    private fun hasNotificationPermission(context: Context): Boolean {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    }
+
     private fun createDeepLinkPendingIntent(context: Context, topicId: Int): PendingIntent {
         val deepLinkIntent =
             Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId")).apply {
@@ -89,38 +87,6 @@ class NotificationReceiver : BroadcastReceiver() {
             deepLinkIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-    }
-
-    private fun scheduleNextNotification(context: Context, notificationData: NotificationData) {
-        val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(
-                NOTIFICATION_DATA_KEY,
-                notificationData.copy(remainingTimes = notificationData.remainingTimes - 1)
-            )
-        }
-
-        val nextPendingIntent = PendingIntent.getBroadcast(
-            context,
-            notificationData.topicId,
-            nextIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val triggerTime = SystemClock.elapsedRealtime() + 10 * 1000
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                triggerTime,
-                nextPendingIntent
-            )
-        } else {
-            alarmManager.setExact(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                triggerTime,
-                nextPendingIntent
-            )
-        }
     }
 
     private fun cancelNotification(context: Context, topicId: Int) {

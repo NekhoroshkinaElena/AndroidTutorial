@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
 import com.example.androidtutorial2.model.NotificationData
 import com.example.androidtutorial2.notifications.NotificationReceiver.Companion.NOTIFICATION_DATA_KEY
 import javax.inject.Inject
@@ -26,8 +25,6 @@ internal class NotificationsManagerImpl @Inject constructor(
         message: String,
         currentRepetition: Int
     ) {
-        Log.i("TAG2", "выбрана тема для повторения: $topicName")
-        Log.i("TAG2", "сколько раз она уже повторялась: $currentRepetition")
         if (!checkAndRequestExactAlarmPermission()) return
 
         val notificationData =
@@ -51,15 +48,22 @@ internal class NotificationsManagerImpl @Inject constructor(
         context.startActivity(intent)
     }
 
-    private fun createNotificationData(topicId: Int, topicName: String, message: String, currentRepetition: Int) = NotificationData(
+    private fun createNotificationData(
+        topicId: Int,
+        topicName: String,
+        message: String,
+        currentRepetition: Int
+    ) = NotificationData(
         topicId = topicId,
         topicName = topicName,
         message = message,
-        remainingTimes = 5, // начальное количество повторений
         currentRepetition = currentRepetition
     )
 
-    private fun createNotificationPendingIntent(topicId: Int, notificationData: NotificationData): PendingIntent {
+    private fun createNotificationPendingIntent(
+        topicId: Int,
+        notificationData: NotificationData
+    ): PendingIntent {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra(NOTIFICATION_DATA_KEY, notificationData)
         }
@@ -96,11 +100,10 @@ internal class NotificationsManagerImpl @Inject constructor(
     override fun cancelNotifications(topicId: Int, topicName: String, message: String) {
         val pendingIntent = createNotificationPendingIntent(
             topicId,
-            NotificationData(topicId, topicName, message, remainingTimes = 0)
+            NotificationData(topicId, topicName, message)
         )
 
         alarmManager.cancel(pendingIntent)
-
         // Отмена активного уведомления
         notificationManager.cancel(topicId)
     }
