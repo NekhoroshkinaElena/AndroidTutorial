@@ -33,9 +33,13 @@ class NotificationReceiver : BroadcastReceiver() {
             return
         }
 
+        if (notificationData.currentRepetition >= 6) {
+            cancelNotification(context, notificationData.topicId)
+            return
+        }
+
         createNotificationChannel()
         showNotification(context, notificationData)
-        scheduleNextNotification(context, notificationData)
     }
 
     private fun injectDependencies(context: Context) {
@@ -56,7 +60,8 @@ class NotificationReceiver : BroadcastReceiver() {
 
     private fun showNotification(context: Context, notificationData: NotificationData) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
 
@@ -65,6 +70,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("Напоминание: ${notificationData.topicName}")
             .setContentText(notificationData.message)
+            .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .build()
@@ -73,9 +79,10 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     private fun createDeepLinkPendingIntent(context: Context, topicId: Int): PendingIntent {
-        val deepLinkIntent = Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId")).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
+        val deepLinkIntent =
+            Intent(Intent.ACTION_VIEW, Uri.parse("app://studyRepeat/$topicId")).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
         return PendingIntent.getActivity(
             context,
             topicId,
@@ -86,7 +93,10 @@ class NotificationReceiver : BroadcastReceiver() {
 
     private fun scheduleNextNotification(context: Context, notificationData: NotificationData) {
         val nextIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(NOTIFICATION_DATA_KEY, notificationData.copy(remainingTimes = notificationData.remainingTimes - 1))
+            putExtra(
+                NOTIFICATION_DATA_KEY,
+                notificationData.copy(remainingTimes = notificationData.remainingTimes - 1)
+            )
         }
 
         val nextPendingIntent = PendingIntent.getBroadcast(
