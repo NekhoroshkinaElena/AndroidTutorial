@@ -10,11 +10,17 @@ import com.example.androidtutorial2.R
 import com.example.androidtutorial2.TutorialApplication
 import com.example.androidtutorial2.base.BaseFragment
 import com.example.androidtutorial2.databinding.FragmentMaterialStudyRepeatBinding
+import com.example.androidtutorial2.notifications.NotificationsManager
+import com.example.androidtutorial2.sub_topics.domain.model.SubTopic
+import javax.inject.Inject
 
 class MaterialStudyRepeatFragment :
     BaseFragment<FragmentMaterialStudyRepeatBinding, MaterialStudyRepeatViewModel>(
         FragmentMaterialStudyRepeatBinding::inflate
     ) {
+
+    @Inject
+    lateinit var notificationManager: NotificationsManager
 
     override fun onAttach(context: Context) {
         (requireActivity().application as TutorialApplication).appComponent.inject(this)
@@ -29,16 +35,21 @@ class MaterialStudyRepeatFragment :
         viewModel.showMaterialStudy(subTopicId)
 
         initializeObservers()
-        initializeListeners(subTopicId)
     }
 
-    private fun initializeListeners(subTopicId: Int) {
+    private fun initializeListeners(subTopic: SubTopic) {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.ibDone.setOnClickListener {
-            viewModel.updateNumberRepetitions(subTopicId)
+            viewModel.updateNumberRepetitions(subTopic.id)
+            notificationManager.scheduleTopicRepeatNotifications(
+                topicId = subTopic.id,
+                topicName = subTopic.name,
+                message = "Не забудьте повторить ${subTopic.name}!",
+                currentRepetition = subTopic.numberRepetitions + 1
+            )
             findNavController().navigateUp()
         }
 
@@ -58,6 +69,8 @@ class MaterialStudyRepeatFragment :
     }
 
     private fun showContent(screenState: MaterialStudyRepeatScreenState.Content) {
+        initializeListeners(screenState.subTopic)
+
         binding.pbProgressBar.isVisible = false
         binding.svContent.isVisible = true
         binding.tvErrorMessage.isVisible = false

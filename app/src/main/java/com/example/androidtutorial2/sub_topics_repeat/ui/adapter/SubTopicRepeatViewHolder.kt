@@ -28,7 +28,7 @@ class SubTopicRepeatViewHolder(
             binding.tvNumberRepetitions.isVisible = true
             binding.tvNumberRepetitions.text =
                 itemView.context.getString(R.string.repetition_format, subTopic.numberRepetitions)
-            if (subTopic.numberRepetitions >= 7) {
+            if (subTopic.numberRepetitions >= 6) {
                 setCardBackgroundColor(R.color.light_green)
             } else {
                 setCardBackgroundColor(R.color.light_yellow)

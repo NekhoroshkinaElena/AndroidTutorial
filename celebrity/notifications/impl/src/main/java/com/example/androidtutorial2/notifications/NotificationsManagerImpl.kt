@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import com.example.androidtutorial2.model.NotificationData
 import com.example.androidtutorial2.notifications.NotificationReceiver.Companion.NOTIFICATION_DATA_KEY
 import javax.inject.Inject
@@ -22,13 +23,17 @@ internal class NotificationsManagerImpl @Inject constructor(
     override fun scheduleTopicRepeatNotifications(
         topicId: Int,
         topicName: String,
-        message: String
+        message: String,
+        currentRepetition: Int
     ) {
+        Log.i("TAG2", "выбрана тема для повторения: $topicName")
+        Log.i("TAG2", "сколько раз она уже повторялась: $currentRepetition")
         if (!checkAndRequestExactAlarmPermission()) return
 
-        val notificationData = createNotificationData(topicId, topicName, message)
+        val notificationData =
+            createNotificationData(topicId, topicName, message, currentRepetition)
         val pendingIntent = createNotificationPendingIntent(topicId, notificationData)
-        scheduleAlarm(pendingIntent, 10 * 1000)
+        scheduleAlarm(pendingIntent, notificationData.currentRepetition)
     }
 
     private fun checkAndRequestExactAlarmPermission(): Boolean {
@@ -46,11 +51,12 @@ internal class NotificationsManagerImpl @Inject constructor(
         context.startActivity(intent)
     }
 
-    private fun createNotificationData(topicId: Int, topicName: String, message: String) = NotificationData(
+    private fun createNotificationData(topicId: Int, topicName: String, message: String, currentRepetition: Int) = NotificationData(
         topicId = topicId,
         topicName = topicName,
         message = message,
-        remainingTimes = 5 // начальное количество повторений
+        remainingTimes = 5, // начальное количество повторений
+        currentRepetition = currentRepetition
     )
 
     private fun createNotificationPendingIntent(topicId: Int, notificationData: NotificationData): PendingIntent {
@@ -65,8 +71,9 @@ internal class NotificationsManagerImpl @Inject constructor(
         )
     }
 
-    private fun scheduleAlarm(pendingIntent: PendingIntent, delayMillis: Long) {
-        val triggerTime = System.currentTimeMillis() + delayMillis
+    private fun scheduleAlarm(pendingIntent: PendingIntent, currentRepetition: Int) {
+
+        val triggerTime = System.currentTimeMillis() + getInterval(currentRepetition)
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
@@ -96,5 +103,20 @@ internal class NotificationsManagerImpl @Inject constructor(
 
         // Отмена активного уведомления
         notificationManager.cancel(topicId)
+    }
+
+    private fun getInterval(currentRepetition: Int): Long {
+        return when (currentRepetition) {
+            0 -> NOTIFICATION_INTERVAL_SHORT
+            1 -> NOTIFICATION_INTERVAL_MEDIUM
+            2 -> NOTIFICATION_INTERVAL_LONG
+            else -> NOTIFICATION_INTERVAL_LONG
+        }
+    }
+
+    companion object {
+        const val NOTIFICATION_INTERVAL_SHORT = 5 * 1000L  // 5 секунд
+        const val NOTIFICATION_INTERVAL_MEDIUM = 15 * 1000L // 15 секунд
+        const val NOTIFICATION_INTERVAL_LONG = 30 * 1000L  // 30 секунд
     }
 }
