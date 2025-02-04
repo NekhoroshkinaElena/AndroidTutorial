@@ -47,7 +47,7 @@ class MaterialStudyRepeatFragment :
             notificationManager.scheduleTopicRepeatNotifications(
                 topicId = subTopic.id,
                 topicName = subTopic.name,
-                message = "Не забудьте повторить ${subTopic.name}!",
+                message = getString(R.string.reminder_message, subTopic.name),
                 currentRepetition = subTopic.numberRepetitions + 1
             )
             findNavController().navigateUp()
