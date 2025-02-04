@@ -50,19 +50,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         val data = intent.data
-        if (data != null) {
-            val subTopicId = data.lastPathSegment?.toIntOrNull()
-            if (subTopicId != null) {
-                navController.navigate(
-                    R.id.materialStudyRepeatFragment,
-                    MaterialStudyRepeatFragment.createArguments(subTopicId),
-                    navOptions {
-                        popUpTo(R.id.materialStudyRepeatFragment) {
-                            inclusive = true
-                        }
+        data?.lastPathSegment?.toIntOrNull()?.let { subTopicId ->
+            navController.navigate(
+                R.id.materialStudyRepeatFragment,
+                MaterialStudyRepeatFragment.createArguments(subTopicId),
+                navOptions {
+                    popUpTo(R.id.materialStudyRepeatFragment) {
+                        inclusive = true
                     }
-                )
-            }
+                }
+            )
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->

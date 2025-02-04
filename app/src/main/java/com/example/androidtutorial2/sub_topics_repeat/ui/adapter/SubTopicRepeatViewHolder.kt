@@ -28,7 +28,7 @@ class SubTopicRepeatViewHolder(
             binding.tvNumberRepetitions.isVisible = true
             binding.tvNumberRepetitions.text =
                 itemView.context.getString(R.string.repetition_format, subTopic.numberRepetitions)
-            if (subTopic.numberRepetitions >= 6) {
+            if (subTopic.numberRepetitions >= REPETITION_LIMIT) {
                 setCardBackgroundColor(R.color.light_green)
             } else {
                 setCardBackgroundColor(R.color.light_yellow)
@@ -65,7 +65,7 @@ class SubTopicRepeatViewHolder(
                     R.string.repetition_format,
                     subTopic.numberRepetitions
                 )
-                if (subTopic.numberRepetitions >= 7) {
+                if (subTopic.numberRepetitions >= REPETITION_LIMIT) {
                     setCardBackgroundColor(R.color.light_green)
                 } else {
                     setCardBackgroundColor(R.color.light_yellow)
@@ -90,5 +90,9 @@ class SubTopicRepeatViewHolder(
                 color
             )
         )
+    }
+
+    companion object {
+        private const val REPETITION_LIMIT = 6
     }
 }

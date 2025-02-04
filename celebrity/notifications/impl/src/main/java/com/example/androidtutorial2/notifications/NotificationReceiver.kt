@@ -13,6 +13,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.androidtutorial2.di.DaggerNotificationComponent
 import com.example.androidtutorial2.model.NotificationData
+import com.example.notifications.impl.R
 import javax.inject.Inject
 
 class NotificationReceiver : BroadcastReceiver() {
@@ -34,7 +35,7 @@ class NotificationReceiver : BroadcastReceiver() {
             return
         }
 
-        createNotificationChannel()
+        createNotificationChannel(context)
 
         if (hasNotificationPermission(context)) {
             showNotification(context, notificationData)
@@ -46,11 +47,11 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationComponent.inject(this)
     }
 
-    private fun createNotificationChannel() {
+    private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Уведомления для повторения тем",
+                context.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
@@ -61,7 +62,12 @@ class NotificationReceiver : BroadcastReceiver() {
         val pendingIntent = createDeepLinkPendingIntent(context, notificationData.topicId)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Напоминание: ${notificationData.topicName}")
+            .setContentTitle(
+                context.getString(
+                    R.string.notification_title,
+                    notificationData.topicName
+                )
+            )
             .setContentText(notificationData.message)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
