@@ -15,56 +15,69 @@ import javax.inject.Inject
 internal class NotificationsManagerImpl @Inject constructor(
     private val alarmManager: AlarmManager,
     private val notificationManager: NotificationManager,
-    private val context: Context
+    private val context: Context,
 ) : NotificationsManager {
 
     @SuppressLint("InlinedApi")
     override fun scheduleTopicRepeatNotifications(
         topicId: Int,
         topicName: String,
-        message: String
+        message: String,
+        currentRepetition: Int
     ) {
+        if (!checkAndRequestExactAlarmPermission()) return
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            // Если разрешение на точные будильники не предоставлено, запрашиваем его
-            if (!alarmManager.canScheduleExactAlarms()) {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-                return
-            }
+        val notificationData =
+            createNotificationData(topicId, topicName, message, currentRepetition)
+        val pendingIntent = createNotificationPendingIntent(topicId, notificationData)
+        scheduleAlarm(pendingIntent, notificationData.currentRepetition)
+    }
+
+    private fun checkAndRequestExactAlarmPermission(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+            requestExactAlarmPermission()
+            return false
         }
+        return true
+    }
 
-        val requestCode = topicId
+    private fun requestExactAlarmPermission() {
+        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+    }
 
-        val notificationData = NotificationData(
-            topicId = topicId,
-            topicName = topicName,
-            message = message,
-            remainingTimes = 5 // начальное количество повторений
-        )
+    private fun createNotificationData(
+        topicId: Int,
+        topicName: String,
+        message: String,
+        currentRepetition: Int
+    ) = NotificationData(
+        topicId = topicId,
+        topicName = topicName,
+        message = message,
+        currentRepetition = currentRepetition
+    )
 
-        // Создаём Intent для вызова BroadcastReceiver (NotificationReceiver),
-        // который будет обрабатывать уведомление
+    private fun createNotificationPendingIntent(
+        topicId: Int,
+        notificationData: NotificationData
+    ): PendingIntent {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra(NOTIFICATION_DATA_KEY, notificationData)
         }
-
-        //Используется для передачи Intent в AlarmManager и гарантирует, что один и тот же будильник
-        // будет заменён, если он уже существует (FLAG_UPDATE_CURRENT).
-        val pendingIntent = PendingIntent.getBroadcast(
+        return PendingIntent.getBroadcast(
             context,
-            requestCode,
+            topicId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
 
-        val currentTime = System.currentTimeMillis()
-        val intervalMillis: Long = 10 * 1000
-        // Время первого срабатывания (через 10 секунд от текущего времени)
-        val triggerTime = currentTime + intervalMillis
+    private fun scheduleAlarm(pendingIntent: PendingIntent, currentRepetition: Int) {
 
+        val triggerTime = System.currentTimeMillis() + getInterval(currentRepetition)
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
@@ -85,28 +98,28 @@ internal class NotificationsManagerImpl @Inject constructor(
     }
 
     override fun cancelNotifications(topicId: Int, topicName: String, message: String) {
-
-        val notificationData = NotificationData(
-            topicId = topicId,
-            topicName = topicName,
-            message = message,
-            remainingTimes = 0
-        )
-
-        val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(NOTIFICATION_DATA_KEY, notificationData)
-        }
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
+        val pendingIntent = createNotificationPendingIntent(
             topicId,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            NotificationData(topicId, topicName, message)
         )
 
         alarmManager.cancel(pendingIntent)
-
         // Отмена активного уведомления
         notificationManager.cancel(topicId)
+    }
+
+    private fun getInterval(currentRepetition: Int): Long {
+        return when (currentRepetition) {
+            0 -> NOTIFICATION_INTERVAL_SHORT
+            1 -> NOTIFICATION_INTERVAL_MEDIUM
+            2 -> NOTIFICATION_INTERVAL_LONG
+            else -> NOTIFICATION_INTERVAL_LONG
+        }
+    }
+
+    companion object {
+        const val NOTIFICATION_INTERVAL_SHORT = 5 * 1000L  // 5 секунд
+        const val NOTIFICATION_INTERVAL_MEDIUM = 15 * 1000L // 15 секунд
+        const val NOTIFICATION_INTERVAL_LONG = 30 * 1000L  // 30 секунд
     }
 }

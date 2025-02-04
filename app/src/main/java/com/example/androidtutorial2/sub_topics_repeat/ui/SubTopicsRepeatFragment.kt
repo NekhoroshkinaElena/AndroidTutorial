@@ -37,7 +37,8 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
                     notificationManager.scheduleTopicRepeatNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
-                        message = "Не забудьте повторить ${subTopic.name}!"
+                        message = "Не забудьте повторить ${subTopic.name}!",
+                        currentRepetition = subTopic.numberRepetitions
                     )
                 }
 
