@@ -34,7 +34,7 @@ class SubTopicRepeatViewHolder(
                 setCardBackgroundColor(R.color.light_yellow)
             }
         } else {
-            setCardBackgroundColor(R.color.white)
+            setCardBackgroundColor(R.color.platinum)
             binding.tvNumberRepetitions.isVisible = false
         }
     }
