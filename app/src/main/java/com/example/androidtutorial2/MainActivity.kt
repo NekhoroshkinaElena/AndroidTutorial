@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity() {
         data?.lastPathSegment?.toIntOrNull()?.let { subTopicId ->
             navController.navigate(
                 R.id.materialStudyRepeatFragment,
-                MaterialStudyRepeatFragment.createArguments(subTopicId),
+                MaterialStudyRepeatFragment.createArguments(
+                    subTopicId = subTopicId,
+                    isFromNotification = true
+                ),
                 navOptions {
                     popUpTo(R.id.materialStudyRepeatFragment) {
                         inclusive = true
