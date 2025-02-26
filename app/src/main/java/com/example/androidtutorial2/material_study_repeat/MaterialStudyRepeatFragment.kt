@@ -16,6 +16,9 @@ import com.example.androidtutorial2.notifications.NotificationsManager
 import com.example.androidtutorial2.sub_topics.domain.model.SubTopic
 import javax.inject.Inject
 
+private const val MATERIAL_TO_STUDY_REPEAT = "material_to_study_repeat_id"
+private const val IS_FROM_NOTIFICATION = "is_from_notification"
+
 class MaterialStudyRepeatFragment :
     BaseFragment<FragmentMaterialStudyRepeatBinding, MaterialStudyRepeatViewModel>(
         FragmentMaterialStudyRepeatBinding::inflate
@@ -47,11 +50,7 @@ class MaterialStudyRepeatFragment :
                 override fun handleOnBackPressed() {
                     val currentState = viewModel.screenState.value
                     if (currentState is MaterialStudyRepeatScreenState.Content) {
-                        if (isFromNotification) {
-                            showExitOptionsDialog(currentState.subTopic)
-                        } else {
-                            findNavController().navigateUp()
-                        }
+                        handleNavigation(currentState.subTopic)
                     }
                 }
             }
@@ -60,11 +59,7 @@ class MaterialStudyRepeatFragment :
 
     private fun initializeListeners(subTopic: SubTopic) {
         binding.toolbar.setNavigationOnClickListener {
-            if (isFromNotification) {
-                showExitOptionsDialog(subTopic)
-            } else {
-                findNavController().navigateUp()
-            }
+            handleNavigation(subTopic)
         }
 
         binding.ibDone.setOnClickListener {
@@ -79,11 +74,7 @@ class MaterialStudyRepeatFragment :
         }
 
         binding.ibClose.setOnClickListener {
-            if (isFromNotification) {
-                showExitOptionsDialog(subTopic)
-            } else {
-                findNavController().navigateUp()
-            }
+            handleNavigation(subTopic)
         }
     }
 
@@ -158,10 +149,15 @@ class MaterialStudyRepeatFragment :
         alertDialog.window?.setBackgroundDrawableResource(R.drawable.rounded_dialog_background)
     }
 
-    companion object {
-        private const val MATERIAL_TO_STUDY_REPEAT = "material_to_study_repeat_id"
-        private const val IS_FROM_NOTIFICATION = "is_from_notification"
+    private fun handleNavigation(subTopic: SubTopic) {
+        if (isFromNotification) {
+            showExitOptionsDialog(subTopic)
+        } else {
+            findNavController().navigateUp()
+        }
+    }
 
+    companion object {
         fun createArguments(subTopicId: Int, isFromNotification: Boolean = false): Bundle =
             bundleOf(
                 MATERIAL_TO_STUDY_REPEAT to subTopicId,
