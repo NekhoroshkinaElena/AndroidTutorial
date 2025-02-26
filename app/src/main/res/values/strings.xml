@@ -51,4 +51,10 @@
     <string name="error_unknown">Произошла неизвестная ошибка</string>
     <string name="error">Произошла ошибка</string>
     <string name="reminder_message">Не забудьте повторить %1$s!</string>
+    <string name="message_activate_repeat_function">Пожалуйста, активируйте функцию "Повторять", чтобы получить доступ к этому учебному материалу.</string>
+    <string name="title_select_action">Выберите действие</string>
+    <string name="message_select_action">Что вы хотите сделать перед выходом?</string>
+    <string name="postpone_repetition">Отложить повторение</string>
+    <string name="remind_later">Напомнить позже</string>
+    <string name="reset_progress">Сбросить прогресс</string>
 </resources>

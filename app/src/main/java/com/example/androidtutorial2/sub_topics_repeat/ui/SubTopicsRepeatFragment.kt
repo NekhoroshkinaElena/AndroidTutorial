@@ -14,6 +14,7 @@ import com.example.androidtutorial2.databinding.FragmentSubTopicsBinding
 import com.example.androidtutorial2.material_study_repeat.MaterialStudyRepeatFragment
 import com.example.androidtutorial2.notifications.NotificationsManager
 import com.example.androidtutorial2.sub_topics_repeat.ui.adapter.SubTopicRepeatAdapter
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopicsRepeatViewModel>(
@@ -25,10 +26,21 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
 
     private val subTopicAdapter = SubTopicRepeatAdapter(
         onClick = { subTopic ->
-            findNavController().navigate(
-                R.id.action_subTopicsRepeatFragment_to_materialStudyRepeatFragment,
-                MaterialStudyRepeatFragment.createArguments(subTopic.id)
-            )
+            if (subTopic.isSelected) {
+                findNavController().navigate(
+                    R.id.action_subTopicsRepeatFragment_to_materialStudyRepeatFragment,
+                    MaterialStudyRepeatFragment.createArguments(subTopic.id)
+                )
+            } else {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    this.getString(R.string.message_activate_repeat_function),
+                    Snackbar.LENGTH_SHORT
+                )
+
+                snackbar.setTextMaxLines(3)
+                snackbar.show()
+            }
         },
         onMenuItemClick = { subTopic, itemId ->
             when (itemId) {
@@ -37,7 +49,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
                     notificationManager.scheduleTopicRepeatNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
-                        message = "Не забудьте повторить ${subTopic.name}!",
+                        message = getString(R.string.reminder_message, subTopic.name),
                         currentRepetition = subTopic.numberRepetitions
                     )
                 }
@@ -47,7 +59,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
                     notificationManager.cancelNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
-                        message = "Не забудьте повторить ${subTopic.name}!"
+                        message = getString(R.string.reminder_message, subTopic.name)
                     )
                 }
 
@@ -56,7 +68,7 @@ class SubTopicsRepeatFragment : BaseFragment<FragmentSubTopicsBinding, SubTopics
                     notificationManager.cancelNotifications(
                         topicId = subTopic.id,
                         topicName = subTopic.name,
-                        message = "Не забудьте повторить ${subTopic.name}!"
+                        message = getString(R.string.reminder_message, subTopic.name)
                     )
                 }
             }

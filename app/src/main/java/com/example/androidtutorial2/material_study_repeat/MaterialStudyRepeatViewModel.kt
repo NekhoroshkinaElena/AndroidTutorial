@@ -75,4 +75,16 @@ class MaterialStudyRepeatViewModel @Inject constructor(
             }
         }
     }
+
+    fun resetProgress(subTopicId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            subTopicsInteractor.resetProgress(subTopicId)
+        }
+    }
+
+    fun postponeRepetition(subTopicId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            subTopicsInteractor.updateSelectionState(subTopicId, false)
+        }
+    }
 }
